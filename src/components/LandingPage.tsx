@@ -67,26 +67,30 @@ export const Hero = ({ heroImage }: { heroImage: string }) => (
 );
 
 export const Features = () => (
-  <section className="py-32 px-8 bg-slate-50">
-    <div className="max-w-7xl mx-auto">
-      <div className="text-center mb-20">
-        <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter mb-4 leading-tight">The Concierge Experience.</h2>
-        <p className="text-slate-500 font-medium">Three pillars of total home autonomy.</p>
+  <section className="py-40 px-8 bg-white relative overflow-hidden">
+    <div className="absolute top-40 left-0 right-0 text-center pointer-events-none opacity-[0.03] select-none">
+      <h2 className="text-[20vw] font-black leading-none uppercase tracking-tighter">Concierge</h2>
+    </div>
+
+    <div className="max-w-7xl mx-auto relative z-10">
+      <div className="text-center mb-32">
+        <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-6 leading-tight">Total Home Sovereignty.</h2>
+        <div className="w-24 h-2 bg-amber-400 mx-auto rounded-full" />
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
         <FeatureCard 
-          icon={<CreditCard className="w-6 h-6 text-amber-500" />}
+          icon={<CreditCard className="w-8 h-8 text-amber-500" />}
           title="Finance Sentinel"
           desc="Aura monitors your bills and grocery spending. It autonomously disputes overcharges and switches your orders to find the best local deals."
         />
         <FeatureCard 
-          icon={<Shield className="w-6 h-6 text-emerald-500" />}
+          icon={<Shield className="w-8 h-8 text-emerald-500" />}
           title="Guardian Protocol"
           desc="Proactive home security that reasons. Aura distinguishes between the delivery driver and a stranger, managing access and alerts instantly."
         />
         <FeatureCard 
-          icon={<Clock className="w-6 h-6 text-blue-500" />}
+          icon={<Clock className="w-8 h-8 text-blue-500" />}
           title="Time Weaver"
           desc="Your personal life-orchestrator. Aura handles scheduling, appointment booking, and mental load, giving you back 15 hours every week."
         />
@@ -96,37 +100,39 @@ export const Features = () => (
 );
 
 const FeatureCard = ({ icon, title, desc }: any) => (
-  <div className="p-10 bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/20 hover:scale-105 transition-all">
-    <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center mb-6">
+  <div className="p-12 bg-[#fafafa] rounded-[3rem] border border-slate-100 shadow-2xl shadow-slate-200/20 hover:translate-y-[-10px] transition-all duration-500 group">
+    <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mb-10 shadow-lg group-hover:scale-110 transition-transform">
       {icon}
     </div>
-    <h3 className="text-xl font-bold text-slate-900 mb-4 tracking-tight leading-tight">{title}</h3>
-    <p className="text-slate-500 leading-relaxed text-sm">{desc}</p>
+    <h3 className="text-2xl font-black text-slate-900 mb-6 tracking-tight leading-tight">{title}</h3>
+    <p className="text-slate-500 leading-relaxed text-base font-medium opacity-80">{desc}</p>
   </div>
 );
 
 export const CTA = () => (
-  <section className="py-32 px-8">
-    <div className="max-w-5xl mx-auto bg-slate-900 rounded-[3rem] p-16 text-center relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
+  <section className="py-20 px-4 md:px-8 bg-white">
+    <div className="max-w-[1400px] mx-auto bg-slate-900 rounded-[4rem] p-12 md:p-24 text-center relative overflow-hidden shadow-[0_60px_120px_-20px_rgba(0,0,0,0.3)]">
+      <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-amber-500/10 rounded-full blur-[120px] -mr-40 -mt-40" />
+      <div className="absolute bottom-0 left-0 w-[40rem] h-[40rem] bg-blue-500/10 rounded-full blur-[120px] -ml-40 -mb-40" />
       
-      <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-8 relative z-10 leading-tight">
-        Ready to live on <br />
-        <span className="text-amber-400">Autopilot?</span>
-      </h2>
-      <p className="text-slate-400 text-lg mb-12 max-w-xl mx-auto relative z-10">
-        Join the exclusive waitlist for Aura Home AI and be the first to experience the world's first autonomous home concierge.
-      </p>
-      <div className="flex flex-col md:flex-row gap-4 justify-center items-center relative z-10">
-        <input 
-          type="email" 
-          placeholder="Enter your email" 
-          className="bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 w-full md:w-80 h-[60px]"
-        />
-        <button className="bg-amber-500 text-slate-900 px-8 py-4 rounded-2xl font-bold uppercase tracking-widest hover:bg-white transition-all w-full md:w-fit h-[60px]">
-          Reserve Access
-        </button>
+      <div className="relative z-10">
+        <h2 className="text-5xl md:text-8xl font-black text-white tracking-tighter mb-10 leading-[0.85]">
+          Ready to live on <br />
+          <span className="text-amber-400">Autopilot?</span>
+        </h2>
+        <p className="text-slate-400 text-xl mb-16 max-w-2xl mx-auto font-medium leading-relaxed">
+          Join the exclusive waitlist for Aura Home AI and be the first to experience the world's first autonomous home concierge.
+        </p>
+        <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+          <input 
+            type="email" 
+            placeholder="your@email.com" 
+            className="bg-white/5 border border-white/10 rounded-[2rem] px-8 py-6 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500 w-full md:w-[400px] h-[70px] text-lg font-bold"
+          />
+          <button className="bg-amber-500 text-slate-900 px-12 py-6 rounded-[2rem] font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all w-full md:w-fit h-[70px]">
+            Reserve Access
+          </button>
+        </div>
       </div>
     </div>
   </section>

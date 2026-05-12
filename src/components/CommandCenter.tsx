@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Shield, CreditCard, Zap, ShoppingCart, MessageSquare, TrendingDown, Bell } from 'lucide-react';
+import { Shield, CreditCard, Zap, ShoppingCart, MessageSquare, TrendingDown, Bell, Home, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function AuraCommandCenter() {
@@ -34,75 +34,98 @@ export default function AuraCommandCenter() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6 md:p-12 font-['Inter']">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-12">
-          <div>
-            <h1 className="text-3xl font-black text-slate-900 tracking-tight">Home Command</h1>
-            <p className="text-slate-500 font-medium">Good Morning. Aura is protecting your home.</p>
+    <div className="min-h-screen bg-[#fafafa] p-4 md:p-8 font-['Inter'] selection:bg-amber-100">
+      <div className="max-w-[1400px] mx-auto">
+        
+        {/* Elite Command Navbar */}
+        <nav className="flex justify-between items-center mb-12 px-6 py-4 bg-white rounded-[2rem] shadow-xl shadow-slate-200/40 border border-white">
+          <div className="flex items-center gap-6">
+            <a href="/" className="flex items-center gap-2 text-slate-400 hover:text-slate-900 transition-colors">
+              <ArrowLeft className="w-5 h-5" />
+              <span className="text-[10px] font-black uppercase tracking-widest">Back to Home</span>
+            </a>
+            <div className="h-6 w-[1px] bg-slate-100" />
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 bg-amber-400 rounded flex items-center justify-center">
+                <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+              </div>
+              <span className="text-sm font-black tracking-tighter text-slate-900 uppercase">Aura <span className="text-amber-500">Command</span></span>
+            </div>
           </div>
-          <div className="flex gap-4">
-            <button className="p-4 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all relative">
-              <Bell className="w-6 h-6 text-slate-600" />
-              <div className="absolute top-3 right-3 w-2 h-2 bg-amber-500 rounded-full" />
+          
+          <div className="flex items-center gap-4">
+            <button className="p-3 bg-slate-50 rounded-xl hover:bg-white hover:shadow-md transition-all relative">
+              <Bell className="w-5 h-5 text-slate-400" />
+              <div className="absolute top-2 right-2 w-2 h-2 bg-amber-500 rounded-full border-2 border-white" />
             </button>
-            <div className="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center font-bold text-amber-700">
+            <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center font-black text-xs text-white">
               AD
             </div>
           </div>
-        </div>
+        </nav>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <StatCard 
-            icon={<TrendingDown className="w-6 h-6 text-emerald-500" />}
-            label="Total Saved"
-            value={`$${savings.toFixed(2)}`}
-            sub="Auto-Optimized this month"
-          />
-          <StatCard 
-            icon={<Shield className="w-6 h-6 text-blue-500" />}
-            label="Home Security"
-            value="Active"
-            sub="3 detections suppressed today"
-          />
-          <StatCard 
-            icon={<Zap className="w-6 h-6 text-amber-500" />}
-            label="Energy Efficiency"
-            value="+12.4%"
-            sub="Compared to last month"
-          />
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          
+          {/* Main Dashboard Area */}
+          <div className="lg:col-span-3 space-y-8">
+            
+            {/* Header Title Section */}
+            <div className="px-2">
+              <h1 className="text-5xl font-black text-slate-900 tracking-tighter mb-2">Home Sovereignty.</h1>
+              <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px]">Active Status · 38 Autonomous Decisions Today</p>
+            </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Reasoning Feed */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-[2.5rem] p-8 shadow-2xl shadow-slate-200/50 border border-slate-100 h-full">
-              <div className="flex justify-between items-center mb-8">
-                <h3 className="text-xl font-black text-slate-900 tracking-tight">AI Reasoning Loop</h3>
-                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500 flex items-center gap-2">
-                  <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" /> Live Autonomy
-                </span>
+            {/* Stats Grid - High Depth */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <StatCard 
+                icon={<TrendingDown className="w-6 h-6 text-emerald-500" />}
+                label="Commercial Savings"
+                value={`$${savings.toFixed(2)}`}
+                sub="Auto-Optimized"
+                trend="+12% from last week"
+              />
+              <StatCard 
+                icon={<Shield className="w-6 h-6 text-blue-500" />}
+                label="Guardian Protocol"
+                value="Secure"
+                sub="3 interceptions"
+                trend="Perimeter Lock Active"
+              />
+              <StatCard 
+                icon={<Zap className="w-6 h-6 text-amber-500" />}
+                label="Power Balance"
+                value="+12.4%"
+                sub="HVAC Optimized"
+                trend="Saved $0.80 today"
+              />
+            </div>
+
+            {/* Live Reasoning Feed */}
+            <div className="bg-white rounded-[3rem] p-10 shadow-[0_40px_80px_-15px_rgba(0,0,0,0.05)] border border-slate-50">
+              <div className="flex justify-between items-center mb-10">
+                <h3 className="text-2xl font-black text-slate-900 tracking-tight">Autonomous Feed</h3>
+                <div className="px-4 py-1.5 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-full flex items-center gap-2">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" /> Live Reasoning
+                </div>
               </div>
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {logs.map((log) => (
                   <motion.div 
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
                     key={log.id} 
-                    className="flex gap-6 items-start group"
+                    className="flex gap-8 items-center group"
                   >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                      log.type === 'finance' ? 'bg-amber-100 text-amber-600' : 
-                      log.type === 'security' ? 'bg-blue-100 text-blue-600' : 'bg-emerald-100 text-emerald-600'
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-lg ${
+                      log.type === 'finance' ? 'bg-amber-100 text-amber-600 shadow-amber-100/50' : 
+                      log.type === 'security' ? 'bg-blue-100 text-blue-600 shadow-blue-100/50' : 'bg-emerald-100 text-emerald-600 shadow-emerald-100/50'
                     }`}>
-                      {log.type === 'finance' ? <CreditCard className="w-5 h-5" /> : 
-                       log.type === 'security' ? <Shield className="w-5 h-5" /> : <ShoppingCart className="w-5 h-5" />}
+                      {log.type === 'finance' ? <CreditCard className="w-6 h-6" /> : 
+                       log.type === 'security' ? <Shield className="w-6 h-6" /> : <ShoppingCart className="w-6 h-6" />}
                     </div>
-                    <div>
-                      <p className="text-slate-800 font-semibold leading-snug group-hover:text-amber-600 transition-colors">{log.msg}</p>
-                      <p className="text-slate-400 text-xs font-medium mt-1 uppercase tracking-widest">{log.time}</p>
+                    <div className="flex-1 border-b border-slate-50 pb-6">
+                      <p className="text-lg text-slate-800 font-bold leading-tight group-hover:text-amber-600 transition-colors">{log.msg}</p>
+                      <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] mt-2">{log.time}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -110,24 +133,34 @@ export default function AuraCommandCenter() {
             </div>
           </div>
 
-          {/* Assistant Box */}
-          <div className="lg:col-span-1">
-            <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white h-full relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl" />
-              <h3 className="text-xl font-black mb-6 flex items-center gap-3">
-                <MessageSquare className="w-6 h-6 text-amber-400" /> Aura Chat
-              </h3>
-              <div className="bg-white/5 rounded-2xl p-4 mb-8 text-sm text-slate-400 leading-relaxed italic border border-white/10">
-                "Aura, why is my energy bill so high?"
+          {/* Right Sidebar - High Friction Assistant */}
+          <div className="lg:col-span-1 space-y-8">
+            <div className="bg-slate-900 rounded-[3rem] p-10 text-white h-full shadow-2xl relative overflow-hidden flex flex-col">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[80px]" />
+              
+              <div className="relative z-10 mb-10">
+                <h3 className="text-2xl font-black mb-2 flex items-center gap-3">
+                  Aura Chat
+                </h3>
+                <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest">Natural Language Logic</p>
               </div>
-              <p className="text-sm text-slate-300 mb-8 leading-relaxed">
-                Aura responds using autonomous reasoning to explain your home's performance in simple, everyday terms.
-              </p>
-              <input 
-                type="text" 
-                placeholder="Ask Aura anything..." 
-                className="w-full bg-white/10 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all"
-              />
+
+              <div className="flex-1 space-y-6 relative z-10">
+                <div className="bg-white/5 rounded-2xl p-6 text-sm text-slate-300 leading-relaxed italic border border-white/10">
+                  "Aura, find a better deal on my recurring organic milk order."
+                </div>
+                <div className="bg-amber-500/20 rounded-2xl p-6 text-sm text-amber-400 font-bold border border-amber-500/20">
+                  "Found a 15% discount at Market Fresh. Order rerouted. Saved $2.10."
+                </div>
+              </div>
+
+              <div className="mt-10 relative z-10">
+                <input 
+                  type="text" 
+                  placeholder="Tell Aura to..." 
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all font-bold"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -136,13 +169,16 @@ export default function AuraCommandCenter() {
   );
 }
 
-const StatCard = ({ icon, label, value, sub }: any) => (
-  <div className="bg-white p-8 rounded-[2rem] shadow-xl shadow-slate-200/30 border border-slate-100 hover:scale-[1.02] transition-all">
-    <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center mb-6">
+const StatCard = ({ icon, label, value, sub, trend }: any) => (
+  <div className="bg-white p-10 rounded-[3rem] shadow-xl shadow-slate-200/40 border border-white hover:translate-y-[-5px] transition-all group">
+    <div className="w-16 h-16 bg-slate-50 rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-inner">
       {icon}
     </div>
-    <p className="text-slate-500 text-xs font-black uppercase tracking-widest mb-2">{label}</p>
-    <p className="text-3xl font-black text-slate-900 mb-2">{value}</p>
-    <p className="text-slate-400 text-xs font-medium italic">{sub}</p>
+    <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] mb-3">{label}</p>
+    <div className="flex items-end gap-3 mb-2">
+      <p className="text-4xl font-black text-slate-900 tracking-tighter">{value}</p>
+      <p className="text-emerald-500 text-[10px] font-black uppercase mb-2 tracking-widest">{trend}</p>
+    </div>
+    <p className="text-slate-500 text-sm font-bold">{sub}</p>
   </div>
 );
