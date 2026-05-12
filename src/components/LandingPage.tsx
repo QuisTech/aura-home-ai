@@ -12,10 +12,10 @@ export const Navbar = () => (
       <span className="text-xl font-black tracking-tighter text-slate-900 uppercase">Aura <span className="text-amber-500">Home</span></span>
     </div>
     <div className="flex gap-4 items-center">
-      <a href="/command" className="bg-slate-900 text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-amber-500 transition-all flex items-center justify-center min-h-[40px] whitespace-nowrap">
+      <a href="/command" className="bg-slate-900 text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-amber-500 transition-all flex items-center justify-center min-h-[40px] whitespace-nowrap">
         Launch Console
       </a>
-      <button className="hidden md:flex bg-amber-100 text-amber-700 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-amber-200 transition-all items-center justify-center min-h-[40px]">
+      <button className="hidden md:flex bg-amber-100 text-amber-700 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-amber-200 transition-all items-center justify-center min-h-[40px]">
         Join Beta
       </button>
     </div>
@@ -23,43 +23,43 @@ export const Navbar = () => (
 );
 
 export const Hero = ({ heroImage }: { heroImage: string }) => (
-  <section className="relative min-h-screen pt-32 pb-20 px-8 flex flex-col items-center text-center overflow-hidden">
+  <section className="relative min-h-screen pt-40 pb-20 px-8 flex flex-col items-center text-center overflow-hidden">
     <div className="absolute inset-0 z-0">
       <img src={heroImage} alt="Premium Home" className="w-full h-full object-cover opacity-20 blur-sm" />
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-slate-50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-white/90 to-[#fafafa]" />
     </div>
 
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="relative z-10 max-w-4xl"
+      className="relative z-10 max-w-5xl"
     >
-      <span className="inline-block px-4 py-1.5 bg-amber-100 text-amber-700 text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-8">
+      <span className="inline-block px-5 py-2 bg-amber-100 text-amber-700 text-[9px] font-black uppercase tracking-[0.5em] rounded-full mb-10">
         Autonomous Life Management
       </span>
-      <h1 className="text-6xl md:text-8xl font-black text-slate-900 tracking-tighter mb-8 leading-[0.9]">
+      <h1 className="text-6xl md:text-[7.5rem] font-black text-slate-900 tracking-[-0.05em] mb-10 leading-[0.82] uppercase">
         Live More. <br />
         <span className="text-amber-500">Manage Less.</span>
       </h1>
-      <p className="text-xl text-slate-600 font-medium max-w-2xl mx-auto mb-12 leading-relaxed">
+      <p className="text-xl md:text-2xl text-slate-500 font-medium max-w-3xl mx-auto mb-16 leading-[1.6] [text-wrap:balance]">
         Aura is your autonomous home concierge. It manages your bills, secures your space, and optimizes your life—so you can focus on what actually matters.
       </p>
-      <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-        <a href="/command" className="bg-slate-900 text-white px-10 py-5 rounded-2xl text-xs font-bold uppercase tracking-widest hover:scale-105 transition-all shadow-2xl flex items-center gap-3 min-h-[60px] w-full md:w-fit justify-center">
-          Launch Console <ArrowRight className="w-4 h-4" />
+      <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+        <a href="/command" className="bg-slate-900 text-white px-12 py-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] hover:scale-105 transition-all shadow-[0_30px_60px_-12px_rgba(0,0,0,0.25)] flex items-center gap-4 min-h-[70px] w-full md:w-fit justify-center">
+          Launch Console <ArrowRight className="w-5 h-5" />
         </a>
-        <button className="bg-white border-2 border-slate-200 text-slate-900 px-10 py-5 rounded-2xl text-xs font-bold uppercase tracking-widest hover:border-amber-400 transition-all min-h-[60px] w-full md:w-fit justify-center">
+        <button className="bg-white border-2 border-slate-200 text-slate-900 px-12 py-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] hover:border-amber-400 transition-all min-h-[70px] w-full md:w-fit justify-center">
           Watch Film
         </button>
       </div>
     </motion.div>
 
     <motion.div 
-      initial={{ opacity: 0, scale: 0.9 }}
+      initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.5, duration: 1 }}
-      className="relative z-10 mt-20 w-full max-w-5xl rounded-3xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border border-white/20"
+      transition={{ delay: 0.5, duration: 1.2 }}
+      className="relative z-10 mt-28 w-full max-w-6xl rounded-[3rem] overflow-hidden shadow-[0_80px_160px_-30px_rgba(0,0,0,0.2)] border-8 border-white"
     >
       <img src={heroImage} alt="Aura Interface" className="w-full h-auto" />
     </motion.div>
@@ -67,30 +67,30 @@ export const Hero = ({ heroImage }: { heroImage: string }) => (
 );
 
 export const Features = () => (
-  <section className="py-40 px-8 bg-white relative overflow-hidden">
-    <div className="absolute top-40 left-0 right-0 text-center pointer-events-none opacity-[0.03] select-none">
-      <h2 className="text-[20vw] font-black leading-none uppercase tracking-tighter">Concierge</h2>
+  <section className="py-48 px-8 bg-white relative overflow-hidden">
+    <div className="absolute top-48 left-0 right-0 text-center pointer-events-none opacity-[0.04] select-none">
+      <h2 className="text-[25vw] font-black leading-none uppercase tracking-[-0.08em]">Aura</h2>
     </div>
 
     <div className="max-w-7xl mx-auto relative z-10">
-      <div className="text-center mb-32">
-        <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter mb-6 leading-tight">Total Home Sovereignty.</h2>
-        <div className="w-24 h-2 bg-amber-400 mx-auto rounded-full" />
+      <div className="text-center mb-40">
+        <h2 className="text-5xl md:text-8xl font-black text-slate-900 tracking-[-0.04em] mb-8 leading-[0.9] uppercase">Total Home <br/>Sovereignty.</h2>
+        <div className="w-32 h-2.5 bg-amber-400 mx-auto rounded-full" />
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
         <FeatureCard 
-          icon={<CreditCard className="w-8 h-8 text-amber-500" />}
+          icon={<CreditCard className="w-9 h-9 text-amber-500" />}
           title="Finance Sentinel"
           desc="Aura monitors your bills and grocery spending. It autonomously disputes overcharges and switches your orders to find the best local deals."
         />
         <FeatureCard 
-          icon={<Shield className="w-8 h-8 text-emerald-500" />}
+          icon={<Shield className="w-9 h-9 text-emerald-500" />}
           title="Guardian Protocol"
           desc="Proactive home security that reasons. Aura distinguishes between the delivery driver and a stranger, managing access and alerts instantly."
         />
         <FeatureCard 
-          icon={<Clock className="w-8 h-8 text-blue-500" />}
+          icon={<Clock className="w-9 h-9 text-blue-500" />}
           title="Time Weaver"
           desc="Your personal life-orchestrator. Aura handles scheduling, appointment booking, and mental load, giving you back 15 hours every week."
         />
@@ -100,36 +100,36 @@ export const Features = () => (
 );
 
 const FeatureCard = ({ icon, title, desc }: any) => (
-  <div className="p-12 bg-[#fafafa] rounded-[3rem] border border-slate-100 shadow-2xl shadow-slate-200/20 hover:translate-y-[-10px] transition-all duration-500 group">
-    <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mb-10 shadow-lg group-hover:scale-110 transition-transform">
+  <div className="p-14 bg-[#fafafa] rounded-[4rem] border border-slate-100 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.03)] hover:translate-y-[-12px] transition-all duration-700 group">
+    <div className="w-24 h-24 bg-white rounded-[2.5rem] flex items-center justify-center mb-12 shadow-xl group-hover:scale-110 transition-transform duration-500">
       {icon}
     </div>
-    <h3 className="text-2xl font-black text-slate-900 mb-6 tracking-tight leading-tight">{title}</h3>
-    <p className="text-slate-500 leading-relaxed text-base font-medium opacity-80">{desc}</p>
+    <h3 className="text-3xl font-black text-slate-900 mb-8 tracking-tighter leading-tight uppercase">{title}</h3>
+    <p className="text-slate-500 leading-[1.7] text-lg font-medium opacity-70 [text-wrap:balance]">{desc}</p>
   </div>
 );
 
 export const CTA = () => (
-  <section className="py-20 px-4 md:px-8 bg-white">
-    <div className="max-w-[1400px] mx-auto bg-slate-900 rounded-[4rem] p-12 md:p-24 text-center relative overflow-hidden shadow-[0_60px_120px_-20px_rgba(0,0,0,0.3)]">
-      <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-amber-500/10 rounded-full blur-[120px] -mr-40 -mt-40" />
-      <div className="absolute bottom-0 left-0 w-[40rem] h-[40rem] bg-blue-500/10 rounded-full blur-[120px] -ml-40 -mb-40" />
+  <section className="py-24 px-4 md:px-8 bg-white">
+    <div className="max-w-[1500px] mx-auto bg-slate-900 rounded-[5rem] p-16 md:p-32 text-center relative overflow-hidden shadow-[0_80px_160px_-40px_rgba(0,0,0,0.4)]">
+      <div className="absolute top-0 right-0 w-[50rem] h-[50rem] bg-amber-500/10 rounded-full blur-[150px] -mr-60 -mt-60" />
+      <div className="absolute bottom-0 left-0 w-[50rem] h-[50rem] bg-blue-500/10 rounded-full blur-[150px] -ml-60 -mb-60" />
       
       <div className="relative z-10">
-        <h2 className="text-5xl md:text-8xl font-black text-white tracking-tighter mb-10 leading-[0.85]">
-          Ready to live on <br />
+        <h2 className="text-5xl md:text-[9rem] font-black text-white tracking-[-0.06em] mb-12 leading-[0.8] uppercase">
+          Ready to live <br />
           <span className="text-amber-400">Autopilot?</span>
         </h2>
-        <p className="text-slate-400 text-xl mb-16 max-w-2xl mx-auto font-medium leading-relaxed">
+        <p className="text-slate-400 text-xl md:text-2xl mb-20 max-w-2xl mx-auto font-medium leading-[1.6] [text-wrap:balance]">
           Join the exclusive waitlist for Aura Home AI and be the first to experience the world's first autonomous home concierge.
         </p>
         <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
           <input 
             type="email" 
             placeholder="your@email.com" 
-            className="bg-white/5 border border-white/10 rounded-[2rem] px-8 py-6 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500 w-full md:w-[400px] h-[70px] text-lg font-bold"
+            className="bg-white/5 border border-white/10 rounded-[2.5rem] px-10 py-8 text-white placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 w-full md:w-[500px] h-[80px] text-xl font-bold transition-all"
           />
-          <button className="bg-amber-500 text-slate-900 px-12 py-6 rounded-[2rem] font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all w-full md:w-fit h-[70px]">
+          <button className="bg-amber-500 text-slate-900 px-16 py-8 rounded-[2.5rem] font-black uppercase tracking-[0.3em] hover:bg-white hover:scale-105 transition-all w-full md:w-fit h-[80px] text-sm">
             Reserve Access
           </button>
         </div>
