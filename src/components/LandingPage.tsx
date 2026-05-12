@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { Shield, CreditCard, Clock, CheckCircle, ArrowRight, Menu } from 'lucide-react';
+import { Shield, CreditCard, Clock, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Navbar = () => (
@@ -11,14 +11,14 @@ export const Navbar = () => (
       </div>
       <span className="text-xl font-black tracking-tighter text-slate-900 uppercase">Aura <span className="text-amber-500">Home</span></span>
     </div>
-    <div className="hidden md:flex items-center gap-10 text-sm font-bold text-slate-600 uppercase tracking-widest">
-      <a href="#" className="hover:text-amber-500 transition-colors">Concierge</a>
-      <a href="#" className="hover:text-amber-500 transition-colors">Security</a>
-      <a href="#" className="hover:text-amber-500 transition-colors">Pricing</a>
+    <div className="flex gap-4 items-center">
+      <a href="/command" className="bg-slate-900 text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-amber-500 transition-all flex items-center justify-center min-h-[40px] whitespace-nowrap">
+        Launch Console
+      </a>
+      <button className="hidden md:flex bg-amber-100 text-amber-700 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-amber-200 transition-all items-center justify-center min-h-[40px]">
+        Join Beta
+      </button>
     </div>
-    <button className="bg-slate-900 text-white px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-amber-500 transition-all">
-      Join Beta
-    </button>
   </nav>
 );
 
@@ -45,11 +45,11 @@ export const Hero = ({ heroImage }: { heroImage: string }) => (
       <p className="text-xl text-slate-600 font-medium max-w-2xl mx-auto mb-12 leading-relaxed">
         Aura is your autonomous home concierge. It manages your bills, secures your space, and optimizes your life—so you can focus on what actually matters.
       </p>
-      <div className="flex flex-col md:flex-row gap-4 justify-center">
-        <button className="bg-slate-900 text-white px-10 py-5 rounded-2xl text-sm font-bold uppercase tracking-widest hover:scale-105 transition-all shadow-2xl flex items-center gap-3">
-          Get Started <ArrowRight className="w-4 h-4" />
-        </button>
-        <button className="bg-white border-2 border-slate-200 text-slate-900 px-10 py-5 rounded-2xl text-sm font-bold uppercase tracking-widest hover:border-amber-400 transition-all">
+      <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+        <a href="/command" className="bg-slate-900 text-white px-10 py-5 rounded-2xl text-xs font-bold uppercase tracking-widest hover:scale-105 transition-all shadow-2xl flex items-center gap-3 min-h-[60px] w-full md:w-fit justify-center">
+          Launch Console <ArrowRight className="w-4 h-4" />
+        </a>
+        <button className="bg-white border-2 border-slate-200 text-slate-900 px-10 py-5 rounded-2xl text-xs font-bold uppercase tracking-widest hover:border-amber-400 transition-all min-h-[60px] w-full md:w-fit justify-center">
           Watch Film
         </button>
       </div>
@@ -70,7 +70,7 @@ export const Features = () => (
   <section className="py-32 px-8 bg-slate-50">
     <div className="max-w-7xl mx-auto">
       <div className="text-center mb-20">
-        <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter mb-4">The Concierge Experience.</h2>
+        <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter mb-4 leading-tight">The Concierge Experience.</h2>
         <p className="text-slate-500 font-medium">Three pillars of total home autonomy.</p>
       </div>
       
@@ -100,7 +100,7 @@ const FeatureCard = ({ icon, title, desc }: any) => (
     <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center mb-6">
       {icon}
     </div>
-    <h3 className="text-xl font-bold text-slate-900 mb-4 tracking-tight">{title}</h3>
+    <h3 className="text-xl font-bold text-slate-900 mb-4 tracking-tight leading-tight">{title}</h3>
     <p className="text-slate-500 leading-relaxed text-sm">{desc}</p>
   </div>
 );
@@ -111,20 +111,20 @@ export const CTA = () => (
       <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
       
-      <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-8 relative z-10">
+      <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-8 relative z-10 leading-tight">
         Ready to live on <br />
         <span className="text-amber-400">Autopilot?</span>
       </h2>
       <p className="text-slate-400 text-lg mb-12 max-w-xl mx-auto relative z-10">
         Join the exclusive waitlist for Aura Home AI and be the first to experience the world's first autonomous home concierge.
       </p>
-      <div className="flex flex-col md:flex-row gap-4 justify-center relative z-10">
+      <div className="flex flex-col md:flex-row gap-4 justify-center items-center relative z-10">
         <input 
           type="email" 
           placeholder="Enter your email" 
-          className="bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 w-full md:w-80"
+          className="bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 w-full md:w-80 h-[60px]"
         />
-        <button className="bg-amber-500 text-slate-900 px-8 py-4 rounded-2xl font-bold uppercase tracking-widest hover:bg-white transition-all">
+        <button className="bg-amber-500 text-slate-900 px-8 py-4 rounded-2xl font-bold uppercase tracking-widest hover:bg-white transition-all w-full md:w-fit h-[60px]">
           Reserve Access
         </button>
       </div>
