@@ -3,6 +3,9 @@
 ## 🎯 The Commercial Vision
 Aura is designed for the everyday consumer. While AI is often seen as a tool for "tech teams," Aura is a tool for **real people** who want to save money, secure their homes, and reclaim their time. It translates complex agentic reasoning into simple, high-value outcomes.
 
+**Live Deployment:** [https://aura-home-ai-eight.vercel.app/](https://aura-home-ai-eight.vercel.app/)
+**Command Center:** [https://aura-home-ai-eight.vercel.app/command](https://aura-home-ai-eight.vercel.app/command)
+
 ## 🛠️ "Lame Man" Solutions
 *   **The Price Pulse:** Aura autonomously monitors your recurring grocery and household orders. If a local store has a better price, or if a price-spike is detected, Aura reroutes your order or pauses it to save you money.
 *   **The Billing Sentinel:** Aura audits your utility bills and digital subscriptions. If it detects a missing credit or a duplicate charge, it autonomously initiates the dispute process with the provider.

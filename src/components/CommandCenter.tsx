@@ -15,21 +15,21 @@ export default function AuraCommandCenter() {
   useEffect(() => {
     const timer = setInterval(() => {
       const msgs = [
-        "Scanning for insurance discounts...",
-        "detected smart-thermostat inefficiency (-12%).",
-        "Comparison shopping for recurring household items complete.",
-        "Security check: All perimeter sensors nominal.",
-        "Disputing duplicate Netflix charge with provider..."
+        "Switched your Milk order from Target to Walmart. Saved: $1.25.",
+        "Detected unused Netflix subscription. Suggesting cancellation.",
+        "Disputing $15 overcharge on your Comcast bill automatically.",
+        "AC optimized for peak hours. Saved: $0.80 today.",
+        "Package delivered. Identified as 'Amazon' - Safe to retrieve."
       ];
       const newLog = {
         id: Date.now(),
         type: Math.random() > 0.5 ? 'finance' : 'security',
-        msg: `Aura: ${msgs[Math.floor(Math.random() * msgs.length)]}`,
+        msg: `${msgs[Math.floor(Math.random() * msgs.length)]}`,
         time: 'Just now'
       };
       setLogs(prev => [newLog, ...prev.slice(0, 4)]);
       setSavings(s => s + (Math.random() * 0.5));
-    }, 6000);
+    }, 8000);
     return () => clearInterval(timer);
   }, []);
 

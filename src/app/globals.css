@@ -17,14 +17,6 @@ body {
 }
 
 @layer utilities {
-  .glass-card {
-    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-2xl shadow-slate-200/50;
-  }
-  
-  .gold-gradient {
-    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fbbf24 100%);
-  }
-  
   .text-balance {
     text-wrap: balance;
   }
