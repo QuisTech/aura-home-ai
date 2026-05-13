@@ -82,7 +82,7 @@ export const Hero = () => {
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 relative">
-          <PipelineStep icon={<Eye />} title="01. SENSE" desc="Home sensors & APIs capture environmental, financial, and security data." />
+          <PipelineStep icon={<Eye />} title="01. SENSE" desc="Multimodal Agentic Sensors capture environmental, financial, and vision data in real-time." />
           <PipelineStep icon={<Brain />} title="02. REASON" desc="Gemini 2.0 processes intent and devises an autonomous path." />
           <PipelineStep icon={<Database />} title="03. PERSIST" desc="Decisions are committed to the Sovereign MongoDB Vault via MCP." />
           <PipelineStep icon={<Zap />} title="04. RESOLVE" desc="Aura executes. Bills disputed. Orders rerouted. Home secured." />

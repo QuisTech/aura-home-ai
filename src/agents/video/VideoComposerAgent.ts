@@ -1,5 +1,10 @@
 import ffmpeg from 'fluent-ffmpeg';
+import ffmpegPath from 'ffmpeg-static';
 import path from 'path';
+
+if (ffmpegPath) {
+  ffmpeg.setFfmpegPath(ffmpegPath);
+}
 
 export class VideoComposerAgent {
   async finalizeDemo(inputPath: string, outputPath: string): Promise<string> {
@@ -40,6 +45,29 @@ export class VideoComposerAgent {
         ])
         .on('end', () => resolve(outputPath))
         .on('error', reject)
+        .save(outputPath);
+    });
+  }
+
+  async mergeAudioVideo(videoPath: string, audioPath: string, outputPath: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      console.log("🎬 AURA COMPOSER: Merging Sovereignty Voice with Visuals...");
+      
+      ffmpeg(videoPath)
+        .input(audioPath)
+        .outputOptions([
+          '-c:v copy',
+          '-c:a aac',
+          '-shortest'
+        ])
+        .on('end', () => {
+          console.log(`✅ AURA COMPOSER: Narrated Master Demo ready at ${outputPath}`);
+          resolve(outputPath);
+        })
+        .on('error', (err) => {
+          console.error('❌ AURA COMPOSER: Error merging audio/video', err);
+          reject(err);
+        })
         .save(outputPath);
     });
   }

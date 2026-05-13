@@ -105,7 +105,7 @@ export default function AuraCommandCenter() {
             <div className="px-4">
               <h1 className="text-6xl md:text-7xl font-black text-slate-900 tracking-[-0.06em] mb-4 uppercase leading-none">Home Sovereignty.</h1>
               <p className="text-slate-400 font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-3">
-                <span className="w-2 h-2 bg-emerald-500 rounded-full" /> Active Status · 7 Specialist Agents · 38 Decisions
+                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" /> Multimodal Agentic Sensors: Active · 7 Specialist Agents · 38 Decisions
               </p>
             </div>
 
@@ -213,6 +213,10 @@ const StatCard = ({ icon, label, value, sub, trend }: any) => (
     <p className="text-slate-400 text-[9px] font-black uppercase tracking-[0.4em] mb-4">{label}</p>
     <div className="flex items-end gap-3 mb-3">
       <p className="text-5xl font-black text-slate-900 tracking-[-0.06em] leading-none uppercase">{value}</p>
+      <div className="flex items-center space-x-2">
+        <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+        <span className="text-[10px] text-slate-400 font-medium tracking-widest uppercase">Multimodal Agentic Sensors: ONLINE</span>
+      </div>
     </div>
     <div className="flex items-center gap-2 mb-4">
       <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
