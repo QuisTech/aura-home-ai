@@ -153,7 +153,8 @@ export const Hero = () => {
       </div>
     </section>
   </>
-);
+  );
+};
 
 const PipelineStep = ({ icon, title, desc }: any) => (
   <div className="flex flex-col items-center group">
