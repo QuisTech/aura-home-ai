@@ -105,7 +105,7 @@ export default function AuraCommandCenter() {
             <div className="px-4">
               <h1 className="text-6xl md:text-7xl font-black text-slate-900 tracking-[-0.06em] mb-4 uppercase leading-none">Home Sovereignty.</h1>
               <p className="text-slate-400 font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-3">
-                <span className="w-2 h-2 bg-emerald-500 rounded-full" /> Active Status · 9 Specialist Agents · 38 Decisions
+                <span className="w-2 h-2 bg-emerald-500 rounded-full" /> Active Status · 7 Specialist Agents · 38 Decisions
               </p>
             </div>
 

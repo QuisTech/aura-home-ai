@@ -2,8 +2,8 @@
 import React from 'react';
 import { 
   Shield, CreditCard, Clock, ArrowRight, ChevronDown, 
-  Zap, ShoppingCart, Activity, Calendar, Wrench, Eye, 
-  Database, Brain, Cpu, Layers
+  Zap, ShoppingCart, Activity, Eye, 
+  Database, Brain
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -56,26 +56,29 @@ export const Hero = ({ heroImage }: { heroImage: string }) => (
       </div>
     </section>
 
-    {/* Fold 3: The Specialists */}
+    {/* Fold 3: The Seven Pillars */}
     <section className="py-48 px-8 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-40">
           <h2 className="text-5xl md:text-9xl font-black text-slate-900 tracking-[-0.05em] mb-8 uppercase leading-none">
-            Nine <br/><span className="text-amber-500">Specialists.</span>
+            The <br/><span className="text-amber-500">Aura Seven.</span>
           </h2>
-          <p className="text-slate-400 font-black uppercase tracking-[0.4em] text-xs">One Orchestrator · Zero Hands · Total Autonomy</p>
+          <p className="text-slate-400 font-black uppercase tracking-[0.4em] text-xs">Core Autopilot Orchestration · Total Home Sovereignty</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <SpecialistCard id="001" title="Finance Sentinel" icon={<CreditCard />} desc="Disputes overcharges and manages household debt automatically." />
           <SpecialistCard id="002" title="Guardian Protocol" icon={<Shield />} desc="Proactive security that reasons between couriers and intruders." />
           <SpecialistCard id="003" title="Time Weaver" icon={<Clock />} desc="Orchestrates complex schedules and automates mental load." />
           <SpecialistCard id="004" title="Pantry Pilot" icon={<ShoppingCart />} desc="Monitors inventory and reroutes orders for local deals." />
           <SpecialistCard id="005" title="Energy Architect" icon={<Zap />} desc="Optimizes HVAC and power usage against peak utility rates." />
           <SpecialistCard id="006" title="Wellness Warden" icon={<Activity />} desc="Tracks family health metrics and automates prescriptions." />
-          <SpecialistCard id="007" title="Social Secretary" icon={<Calendar />} desc="Manages invitations and coordinates family events hands-free." />
-          <SpecialistCard id="008" title="Maintenance Manager" icon={<Wrench />} desc="Identifies home repairs and sources the best contractors." />
-          <SpecialistCard id="009" title="Vision Advisor" icon={<Eye />} desc="Uses Gemini Vision to analyze live camera feeds for context." />
+          <SpecialistCard id="007" title="Vision Advisor" icon={<Eye />} desc="Uses Gemini Vision to analyze live camera feeds for context." />
+          <div className="p-12 bg-slate-900 rounded-[3.5rem] text-white flex flex-col justify-center items-center text-center shadow-2xl">
+            <Database className="w-12 h-12 text-amber-500 mb-6" />
+            <h3 className="text-xl font-black uppercase mb-4 tracking-tighter">Sovereign Vault</h3>
+            <p className="text-slate-500 text-xs font-medium">Powered by MongoDB Atlas via Model Context Protocol (MCP)</p>
+          </div>
         </div>
       </div>
     </section>
@@ -129,13 +132,13 @@ const PipelineStep = ({ icon, title, desc }: any) => (
 );
 
 const SpecialistCard = ({ id, title, icon, desc }: any) => (
-  <div className="p-12 bg-[#fafafa] rounded-[3.5rem] border border-slate-100 hover:translate-y-[-10px] transition-all duration-500 group">
-    <div className="text-slate-300 text-[8px] font-black uppercase tracking-[0.5em] mb-8">{id} Specialist</div>
-    <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mb-10 shadow-lg group-hover:scale-110 transition-transform">
-      <div className="text-amber-500 w-8 h-8">{icon}</div>
+  <div className="p-10 bg-[#fafafa] rounded-[3rem] border border-slate-100 hover:translate-y-[-10px] transition-all duration-500 group">
+    <div className="text-slate-300 text-[8px] font-black uppercase tracking-[0.5em] mb-6">{id} Specialist</div>
+    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform">
+      <div className="text-amber-500 w-6 h-6">{icon}</div>
     </div>
-    <h3 className="text-2xl font-black text-slate-900 mb-6 tracking-tight uppercase leading-none">{title}</h3>
-    <p className="text-slate-500 leading-relaxed text-sm font-medium opacity-80">{desc}</p>
+    <h3 className="text-xl font-black text-slate-900 mb-4 tracking-tight uppercase leading-none">{title}</h3>
+    <p className="text-slate-500 leading-relaxed text-xs font-medium opacity-80">{desc}</p>
   </div>
 );
 
