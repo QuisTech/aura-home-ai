@@ -23,22 +23,56 @@ export const Navbar = () => (
   </nav>
 );
 
-export const Hero = ({ heroImage }: { heroImage: string }) => (
-  <>
-    {/* Fold 1: Pure Visual Inspiration */}
-    <section className="relative h-screen w-full overflow-hidden bg-slate-900">
-      <img src={heroImage} alt="Pure Inspiration" className="w-full h-full object-cover scale-105 opacity-90" />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40" />
-      
-      <motion.div 
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-4"
-      >
-        <span className="text-[9px] font-black uppercase tracking-[0.6em] text-white/50">Discover Sovereignty</span>
-        <ChevronDown className="w-5 h-5 text-amber-500" />
-      </motion.div>
-    </section>
+export const Hero = () => {
+  const [currentImage, setCurrentImage] = React.useState(0);
+  const images = [
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop", // Earliest
+    "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2070&auto=format&fit=crop", // Current
+    "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1974&auto=format&fit=crop", // Zen Bedroom
+    "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=2070&auto=format&fit=crop"  // Luxury Exterior
+  ];
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <>
+      {/* Fold 1: Pure Visual Inspiration (Carousel) */}
+      <section className="relative h-screen w-full overflow-hidden bg-slate-900">
+        <div className="absolute inset-0 flex">
+          {images.map((img, i) => (
+            <motion.img 
+              key={i}
+              src={img} 
+              alt={`Inspiration ${i}`} 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: i === currentImage ? 0.9 : 0 }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+              className="absolute inset-0 w-full h-full object-cover scale-105" 
+            />
+          ))}
+        </div>
+        
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40" />
+        
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-4"
+        >
+          <div className="flex gap-2 mb-2">
+            {images.map((_, i) => (
+              <div key={i} className={`w-1 h-1 rounded-full transition-all duration-500 ${i === currentImage ? 'w-4 bg-amber-500' : 'bg-white/20'}`} />
+            ))}
+          </div>
+          <span className="text-[9px] font-black uppercase tracking-[0.6em] text-white/50">Discover Sovereignty</span>
+          <ChevronDown className="w-5 h-5 text-amber-500" />
+        </motion.div>
+      </section>
 
     {/* Fold 2: The Logic Pipeline */}
     <section className="py-32 px-8 bg-slate-950 text-white relative overflow-hidden">
