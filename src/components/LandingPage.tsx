@@ -61,9 +61,9 @@ export const Hero = ({ heroImage }: { heroImage: string }) => (
           <a href="/command" className="bg-slate-900 text-white px-12 py-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] hover:scale-105 hover:bg-amber-500 transition-all shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] flex items-center gap-4 min-h-[70px] w-full md:w-fit justify-center">
             Launch Console <ArrowRight className="w-5 h-5" />
           </a>
-          <button className="bg-white border-2 border-slate-200 text-slate-900 px-12 py-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] hover:border-amber-400 transition-all min-h-[70px] w-full md:w-fit justify-center">
+          <a href="/film" className="bg-white border-2 border-slate-200 text-slate-900 px-12 py-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] hover:border-amber-400 transition-all min-h-[70px] w-full md:w-fit flex items-center justify-center">
             Watch Film
-          </button>
+          </a>
         </div>
       </motion.div>
     </section>
