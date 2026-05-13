@@ -1,6 +1,10 @@
 "use client";
 import React from 'react';
-import { Shield, CreditCard, Clock, ArrowRight, ChevronDown } from 'lucide-react';
+import { 
+  Shield, CreditCard, Clock, ArrowRight, ChevronDown, 
+  Zap, ShoppingCart, Activity, Calendar, Wrench, Eye, 
+  Database, Brain, Cpu, Layers
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Navbar = () => (
@@ -12,7 +16,7 @@ export const Navbar = () => (
       <span className="text-xl font-black tracking-tighter text-slate-900 uppercase">Aura <span className="text-amber-500">Home</span></span>
     </div>
     <div className="flex gap-4 items-center">
-      <a href="/command" className="bg-slate-900 text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-amber-500 transition-all flex items-center justify-center min-h-[40px] whitespace-nowrap shadow-xl">
+      <a href="/command" className="bg-slate-900 text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-amber-500 transition-all flex items-center justify-center min-h-[40px] shadow-xl">
         Launch Console
       </a>
     </div>
@@ -21,123 +25,129 @@ export const Navbar = () => (
 
 export const Hero = ({ heroImage }: { heroImage: string }) => (
   <>
-    {/* Fold 1: Pure Visual Inspiration (Zen Fold) */}
-    <section className="relative h-screen w-full overflow-hidden">
-      <img src={heroImage} alt="Pure Inspiration" className="w-full h-full object-cover scale-105" />
+    {/* Fold 1: Pure Visual Inspiration */}
+    <section className="relative h-screen w-full overflow-hidden bg-slate-900">
+      <img src={heroImage} alt="Pure Inspiration" className="w-full h-full object-cover scale-105 opacity-90" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40" />
       
-      {/* Subtle Scroll Prompt */}
       <motion.div 
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 2 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-4"
       >
-        <span className="text-[9px] font-black uppercase tracking-[0.6em] text-slate-400">Discover Aura</span>
+        <span className="text-[9px] font-black uppercase tracking-[0.6em] text-white/50">Discover Sovereignty</span>
         <ChevronDown className="w-5 h-5 text-amber-500" />
       </motion.div>
     </section>
 
-    {/* Fold 2: The Value Revelation (Commercial Fold) */}
-    <section className="relative min-h-screen py-32 px-8 flex flex-col items-center justify-center text-center bg-white overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-[#fafafa] to-white" />
-      
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-        className="relative z-10 max-w-6xl"
-      >
-        <span className="inline-block px-5 py-2 bg-amber-100 text-amber-700 text-[9px] font-black uppercase tracking-[0.5em] rounded-full mb-10 shadow-sm border border-amber-200">
-          Autonomous Life Management
-        </span>
-        <h1 className="text-6xl md:text-[8rem] font-black text-slate-900 tracking-[-0.05em] mb-10 leading-[0.82] uppercase">
-          Live More. <br />
-          <span className="text-amber-500">Manage Less.</span>
-        </h1>
-        <p className="text-xl md:text-2xl text-slate-500 font-medium max-w-3xl mx-auto mb-16 leading-[1.6] [text-wrap:balance]">
-          Aura is your autonomous home concierge. It manages your bills, secures your space, and optimizes your life—so you can focus on what actually matters.
-        </p>
+    {/* Fold 2: The Logic Pipeline */}
+    <section className="py-32 px-8 bg-slate-950 text-white relative overflow-hidden">
+      <div className="max-w-7xl mx-auto text-center relative z-10">
+        <h2 className="text-4xl md:text-7xl font-black tracking-tighter mb-20 uppercase leading-none">
+          Sensor. <span className="text-amber-500">Reason.</span> Resolve.
+        </h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 relative">
+          <PipelineStep icon={<Eye />} title="01. SENSE" desc="Home sensors & APIs capture environmental, financial, and security data." />
+          <PipelineStep icon={<Brain />} title="02. REASON" desc="Gemini 2.0 processes intent and devises an autonomous path." />
+          <PipelineStep icon={<Database />} title="03. PERSIST" desc="Decisions are committed to the Sovereign MongoDB Vault via MCP." />
+          <PipelineStep icon={<Zap />} title="04. RESOLVE" desc="Aura executes. Bills disputed. Orders rerouted. Home secured." />
+        </div>
+      </div>
+    </section>
+
+    {/* Fold 3: The Specialists */}
+    <section className="py-48 px-8 bg-white relative overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-40">
+          <h2 className="text-5xl md:text-9xl font-black text-slate-900 tracking-[-0.05em] mb-8 uppercase leading-none">
+            Nine <br/><span className="text-amber-500">Specialists.</span>
+          </h2>
+          <p className="text-slate-400 font-black uppercase tracking-[0.4em] text-xs">One Orchestrator · Zero Hands · Total Autonomy</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <SpecialistCard id="001" title="Finance Sentinel" icon={<CreditCard />} desc="Disputes overcharges and manages household debt automatically." />
+          <SpecialistCard id="002" title="Guardian Protocol" icon={<Shield />} desc="Proactive security that reasons between couriers and intruders." />
+          <SpecialistCard id="003" title="Time Weaver" icon={<Clock />} desc="Orchestrates complex schedules and automates mental load." />
+          <SpecialistCard id="004" title="Pantry Pilot" icon={<ShoppingCart />} desc="Monitors inventory and reroutes orders for local deals." />
+          <SpecialistCard id="005" title="Energy Architect" icon={<Zap />} desc="Optimizes HVAC and power usage against peak utility rates." />
+          <SpecialistCard id="006" title="Wellness Warden" icon={<Activity />} desc="Tracks family health metrics and automates prescriptions." />
+          <SpecialistCard id="007" title="Social Secretary" icon={<Calendar />} desc="Manages invitations and coordinates family events hands-free." />
+          <SpecialistCard id="008" title="Maintenance Manager" icon={<Wrench />} desc="Identifies home repairs and sources the best contractors." />
+          <SpecialistCard id="009" title="Vision Advisor" icon={<Eye />} desc="Uses Gemini Vision to analyze live camera feeds for context." />
+        </div>
+      </div>
+    </section>
+
+    {/* Fold 4: The Data (Impact) */}
+    <section className="py-32 px-8 bg-[#fafafa]">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
+        <ImpactCard 
+          title="Subscription Creep" 
+          stat="-$920/yr" 
+          desc="Average household loses $920 annually to unused recurring subscriptions."
+          ref="Aura Research · 2026"
+        />
+        <ImpactCard 
+          title="Energy Leakage" 
+          stat="24.5%" 
+          desc="Autonomous HVAC optimization reduces waste by nearly a quarter."
+          ref="Department of Energy · 2025"
+        />
+      </div>
+    </section>
+
+    {/* Final CTA */}
+    <section className="py-24 px-4 md:px-8 bg-white">
+      <div className="max-w-[1500px] mx-auto bg-slate-900 rounded-[5rem] p-16 md:p-32 text-center relative overflow-hidden shadow-2xl">
+        <h2 className="text-5xl md:text-[9rem] font-black text-white tracking-[-0.06em] mb-12 uppercase leading-[0.8]">
+          Ready to live <br />
+          <span className="text-amber-400">Autopilot?</span>
+        </h2>
         <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-          <a href="/command" className="bg-slate-900 text-white px-12 py-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] hover:scale-105 hover:bg-amber-500 transition-all shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] flex items-center gap-4 min-h-[70px] w-full md:w-fit justify-center">
-            Launch Console <ArrowRight className="w-5 h-5" />
+          <a href="/command" className="bg-amber-500 text-slate-900 px-16 py-8 rounded-[2.5rem] font-black uppercase tracking-[0.3em] hover:bg-white hover:scale-105 transition-all h-[80px] flex items-center">
+            Reserve Access
           </a>
-          <a href="/film" className="bg-white border-2 border-slate-200 text-slate-900 px-12 py-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] hover:border-amber-400 transition-all min-h-[70px] w-full md:w-fit flex items-center justify-center">
+          <a href="/film" className="bg-white/10 text-white px-16 py-8 rounded-[2.5rem] font-black uppercase tracking-[0.3em] hover:bg-white hover:text-slate-900 transition-all h-[80px] flex items-center">
             Watch Film
           </a>
         </div>
-      </motion.div>
+      </div>
     </section>
   </>
 );
 
-export const Features = () => (
-  <section className="py-48 px-8 bg-white relative overflow-hidden border-t border-slate-50">
-    <div className="absolute top-48 left-0 right-0 text-center pointer-events-none opacity-[0.04] select-none">
-      <h2 className="text-[25vw] font-black leading-none uppercase tracking-[-0.08em]">Aura</h2>
+const PipelineStep = ({ icon, title, desc }: any) => (
+  <div className="flex flex-col items-center group">
+    <div className="w-24 h-24 bg-white/5 border border-white/10 rounded-[2rem] flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-xl">
+      <div className="text-amber-500 w-10 h-10">{icon}</div>
     </div>
-
-    <div className="max-w-7xl mx-auto relative z-10">
-      <div className="text-center mb-40">
-        <h2 className="text-5xl md:text-8xl font-black text-slate-900 tracking-[-0.04em] mb-8 leading-[0.9] uppercase">Total Home <br/>Sovereignty.</h2>
-        <div className="w-32 h-2.5 bg-amber-400 mx-auto rounded-full" />
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
-        <FeatureCard 
-          icon={<CreditCard className="w-9 h-9 text-amber-500" />}
-          title="Finance Sentinel"
-          desc="Aura monitors your bills and grocery spending. It autonomously disputes overcharges and switches your orders to find the best local deals."
-        />
-        <FeatureCard 
-          icon={<Shield className="w-9 h-9 text-emerald-500" />}
-          title="Guardian Protocol"
-          desc="Proactive home security that reasons. Aura distinguishes between the delivery driver and a stranger, managing access and alerts instantly."
-        />
-        <FeatureCard 
-          icon={<Clock className="w-9 h-9 text-blue-500" />}
-          title="Time Weaver"
-          desc="Your personal life-orchestrator. Aura handles scheduling, appointment booking, and mental load, giving you back 15 hours every week."
-        />
-      </div>
-    </div>
-  </section>
-);
-
-const FeatureCard = ({ icon, title, desc }: any) => (
-  <div className="p-14 bg-[#fafafa] rounded-[4rem] border border-slate-100 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.03)] hover:translate-y-[-12px] transition-all duration-700 group">
-    <div className="w-24 h-24 bg-white rounded-[2.5rem] flex items-center justify-center mb-12 shadow-xl group-hover:scale-110 transition-transform duration-500">
-      {icon}
-    </div>
-    <h3 className="text-3xl font-black text-slate-900 mb-8 tracking-tighter leading-tight uppercase">{title}</h3>
-    <p className="text-slate-500 leading-[1.7] text-lg font-medium opacity-70 [text-wrap:balance]">{desc}</p>
+    <h3 className="text-sm font-black tracking-widest uppercase mb-4">{title}</h3>
+    <p className="text-slate-500 text-xs leading-relaxed max-w-[200px]">{desc}</p>
   </div>
 );
 
-export const CTA = () => (
-  <section className="py-24 px-4 md:px-8 bg-white">
-    <div className="max-w-[1500px] mx-auto bg-slate-900 rounded-[5rem] p-16 md:p-32 text-center relative overflow-hidden shadow-[0_80px_160px_-40px_rgba(0,0,0,0.4)]">
-      <div className="absolute top-0 right-0 w-[50rem] h-[50rem] bg-amber-500/10 rounded-full blur-[150px] -mr-60 -mt-60" />
-      <div className="absolute bottom-0 left-0 w-[50rem] h-[50rem] bg-blue-500/10 rounded-full blur-[150px] -ml-60 -mb-60" />
-      
-      <div className="relative z-10">
-        <h2 className="text-5xl md:text-[9rem] font-black text-white tracking-[-0.06em] mb-12 leading-[0.8] uppercase">
-          Ready to live <br />
-          <span className="text-amber-400">Autopilot?</span>
-        </h2>
-        <p className="text-slate-400 text-xl md:text-2xl mb-20 max-w-2xl mx-auto font-medium leading-[1.6] [text-wrap:balance]">
-          Join the exclusive waitlist for Aura Home AI and be the first to experience the world's first autonomous home concierge.
-        </p>
-        <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-          <input 
-            type="email" 
-            placeholder="your@email.com" 
-            className="bg-white/5 border border-white/10 rounded-[2.5rem] px-10 py-8 text-white placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 w-full md:w-[500px] h-[80px] text-xl font-bold transition-all"
-          />
-          <button className="bg-amber-500 text-slate-900 px-16 py-8 rounded-[2.5rem] font-black uppercase tracking-[0.3em] hover:bg-white hover:scale-105 transition-all w-full md:w-fit h-[80px] text-sm">
-            Reserve Access
-          </button>
-        </div>
+const SpecialistCard = ({ id, title, icon, desc }: any) => (
+  <div className="p-12 bg-[#fafafa] rounded-[3.5rem] border border-slate-100 hover:translate-y-[-10px] transition-all duration-500 group">
+    <div className="text-slate-300 text-[8px] font-black uppercase tracking-[0.5em] mb-8">{id} Specialist</div>
+    <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mb-10 shadow-lg group-hover:scale-110 transition-transform">
+      <div className="text-amber-500 w-8 h-8">{icon}</div>
+    </div>
+    <h3 className="text-2xl font-black text-slate-900 mb-6 tracking-tight uppercase leading-none">{title}</h3>
+    <p className="text-slate-500 leading-relaxed text-sm font-medium opacity-80">{desc}</p>
+  </div>
+);
+
+const ImpactCard = ({ title, stat, desc, ref }: any) => (
+  <div className="p-16 bg-white rounded-[4rem] border border-slate-100 shadow-xl">
+    <div className="flex justify-between items-start mb-10">
+      <h3 className="text-4xl font-black text-slate-900 tracking-tighter uppercase">{title}</h3>
+      <div className="px-4 py-1.5 bg-amber-100 text-amber-700 text-[8px] font-black uppercase tracking-[0.3em] rounded-full">
+        {ref}
       </div>
     </div>
-  </section>
+    <div className="text-7xl font-black text-amber-500 tracking-tighter mb-8">{stat}</div>
+    <p className="text-slate-500 text-lg font-medium leading-relaxed">{desc}</p>
+  </div>
 );
