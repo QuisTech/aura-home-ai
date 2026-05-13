@@ -4,18 +4,18 @@ import { Shield, CreditCard, Clock, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Navbar = () => (
-  <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-8 py-6 backdrop-blur-md bg-white/10 border-b border-white/5">
+  <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-8 py-6 backdrop-blur-md bg-white/30 border-b border-white/10">
     <div className="flex items-center gap-2">
       <div className="w-8 h-8 bg-amber-400 rounded-lg flex items-center justify-center shadow-lg shadow-amber-400/20">
         <div className="w-4 h-4 bg-white rounded-full animate-pulse" />
       </div>
-      <span className="text-xl font-black tracking-tighter text-white uppercase drop-shadow-sm">Aura <span className="text-amber-400">Home</span></span>
+      <span className="text-xl font-black tracking-tighter text-slate-900 uppercase">Aura <span className="text-amber-500">Home</span></span>
     </div>
     <div className="flex gap-4 items-center">
-      <a href="/command" className="bg-white text-slate-900 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-amber-500 hover:text-white transition-all flex items-center justify-center min-h-[40px] whitespace-nowrap shadow-xl">
+      <a href="/command" className="bg-slate-900 text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-amber-500 transition-all flex items-center justify-center min-h-[40px] whitespace-nowrap shadow-xl">
         Launch Console
       </a>
-      <button className="hidden md:flex bg-white/10 backdrop-blur-md text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-white/20 hover:bg-white/20 transition-all items-center justify-center min-h-[40px]">
+      <button className="hidden md:flex bg-amber-100 text-amber-700 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-amber-200 transition-all items-center justify-center min-h-[40px]">
         Join Beta
       </button>
     </div>
@@ -24,12 +24,11 @@ export const Navbar = () => (
 
 export const Hero = ({ heroImage }: { heroImage: string }) => (
   <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden">
-    {/* Full Screen Banner Background */}
+    {/* Full Screen High-Fidelity Background */}
     <div className="absolute inset-0 z-0">
-      <img src={heroImage} alt="Premium Home" className="w-full h-full object-cover scale-105" />
-      {/* Cinematic Overlays */}
-      <div className="absolute inset-0 bg-slate-900/40" /> {/* Soft Darken */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-transparent to-white" /> {/* Depth Gradient */}
+      <img src={heroImage} alt="Premium Home" className="w-full h-full object-cover scale-105 opacity-100" />
+      {/* Soft Pearl Gradients to blend sections */}
+      <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/10" />
     </div>
 
     <motion.div 
@@ -38,33 +37,33 @@ export const Hero = ({ heroImage }: { heroImage: string }) => (
       transition={{ duration: 1, ease: "easeOut" }}
       className="relative z-10 max-w-6xl px-8"
     >
-      <span className="inline-block px-5 py-2 bg-amber-400 text-slate-900 text-[9px] font-black uppercase tracking-[0.5em] rounded-full mb-10 shadow-2xl">
+      <span className="inline-block px-5 py-2 bg-amber-100 text-amber-700 text-[9px] font-black uppercase tracking-[0.5em] rounded-full mb-10 shadow-sm border border-amber-200">
         Autonomous Life Management
       </span>
-      <h1 className="text-6xl md:text-[8rem] font-black text-white tracking-[-0.05em] mb-10 leading-[0.82] uppercase drop-shadow-2xl">
+      <h1 className="text-6xl md:text-[8rem] font-black text-slate-900 tracking-[-0.05em] mb-10 leading-[0.82] uppercase">
         Live More. <br />
-        <span className="text-amber-400">Manage Less.</span>
+        <span className="text-amber-500">Manage Less.</span>
       </h1>
-      <p className="text-xl md:text-2xl text-white/90 font-medium max-w-3xl mx-auto mb-16 leading-[1.6] [text-wrap:balance] drop-shadow-lg">
+      <p className="text-xl md:text-2xl text-slate-600 font-medium max-w-3xl mx-auto mb-16 leading-[1.6] [text-wrap:balance]">
         Aura is your autonomous home concierge. It manages your bills, secures your space, and optimizes your life—so you can focus on what actually matters.
       </p>
       <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-        <a href="/command" className="bg-amber-500 text-slate-900 px-12 py-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] hover:scale-105 hover:bg-white transition-all shadow-[0_30px_60px_-12px_rgba(0,0,0,0.5)] flex items-center gap-4 min-h-[70px] w-full md:w-fit justify-center">
+        <a href="/command" className="bg-slate-900 text-white px-12 py-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] hover:scale-105 hover:bg-amber-500 transition-all shadow-[0_30px_60px_-12px_rgba(0,0,0,0.15)] flex items-center gap-4 min-h-[70px] w-full md:w-fit justify-center">
           Launch Console <ArrowRight className="w-5 h-5" />
         </a>
-        <button className="bg-white/10 backdrop-blur-xl border-2 border-white/20 text-white px-12 py-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] hover:bg-white hover:text-slate-900 transition-all min-h-[70px] w-full md:w-fit justify-center">
+        <button className="bg-white border-2 border-slate-200 text-slate-900 px-12 py-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] hover:border-amber-400 transition-all min-h-[70px] w-full md:w-fit justify-center shadow-lg">
           Watch Film
         </button>
       </div>
     </motion.div>
 
-    {/* Scroll Indicator */}
+    {/* Elegant Scroll Indicator */}
     <motion.div 
       animate={{ y: [0, 10, 0] }}
       transition={{ repeat: Infinity, duration: 2 }}
-      className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 text-white/50"
+      className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 text-slate-300"
     >
-      <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent" />
+      <div className="w-[1px] h-12 bg-gradient-to-b from-slate-300 to-transparent" />
     </motion.div>
   </section>
 );
