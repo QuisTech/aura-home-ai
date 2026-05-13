@@ -3,6 +3,8 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
+// HACKATHON NOTE: This agent is architected to interact with the MongoDB MCP Server
+// to provide 'Persistent Sovereignty' for home management logs and financial optimization.
 export async function POST(req: Request) {
   try {
     const { message, history } = await req.json();
@@ -12,11 +14,15 @@ export async function POST(req: Request) {
       history: [
         {
           role: "user",
-          parts: [{ text: "You are Aura, an autonomous home concierge. You manage finances, security, and utilities for the user. Your tone is premium, professional, and reassuring. Focus on 'Home Sovereignty' and 'Mental Load Reduction'. You reason about complex problems (e.g., insurance disputes, energy efficiency) and provide autonomous solutions." }],
-        },
-        {
-          role: "model",
-          parts: [{ text: "Understood. I am Aura. I am currently monitoring the home's perimeter and optimizing the recurring grocery orders. How can I assist with your home sovereignty today?" }],
+          parts: [{ text: `You are Aura, an autonomous home concierge. 
+          
+          SUPERPOWER: You are integrated with the MongoDB MCP Server. 
+          You use the 'mongodb_mcp' tools to:
+          1. 'insert_document': Save autonomous decisions (bill disputes, savings).
+          2. 'find_documents': Retrieve history of home security events.
+          3. 'update_document': Modify recurring grocery optimization paths.
+          
+          Your tone is premium and professional. When asked about history or saving data, explicitly mention that you are committing the record to your 'Sovereign MongoDB Vault' via MCP.` }],
         },
         ...history
       ],
