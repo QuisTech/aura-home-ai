@@ -11,6 +11,11 @@ export default function AuraCommandCenter() {
   ]);
 
   const [savings, setSavings] = useState(142.50);
+  const [chatInput, setChatInput] = useState('');
+  const [chatHistory, setChatHistory] = useState([
+    { role: 'model', text: 'Good morning. I am Aura. I have successfully disputed a duplicate Netflix charge and optimized your HVAC for the upcoming heatwave. How can I help you reclaim your time today?' }
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -32,6 +37,33 @@ export default function AuraCommandCenter() {
     }, 8000);
     return () => clearInterval(timer);
   }, []);
+
+  const handleChat = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!chatInput.trim() || isLoading) return;
+
+    const userMsg = chatInput;
+    setChatInput('');
+    setChatHistory(prev => [...prev, { role: 'user', text: userMsg }]);
+    setIsLoading(true);
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          message: userMsg, 
+          history: chatHistory.map(h => ({ role: h.role, parts: [{ text: h.text }] }))
+        })
+      });
+      const data = await res.json();
+      setChatHistory(prev => [...prev, { role: 'model', text: data.text }]);
+    } catch (err) {
+      setChatHistory(prev => [...prev, { role: 'model', text: "I'm currently optimizing home systems. Please try again in a moment." }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#fafafa] p-4 md:p-10 font-['Inter'] selection:bg-amber-100">
@@ -145,22 +177,26 @@ export default function AuraCommandCenter() {
                 <p className="text-slate-600 text-[9px] font-black uppercase tracking-[0.4em]">Natural Logic</p>
               </div>
 
-              <div className="flex-1 space-y-8 relative z-10">
-                <div className="bg-white/5 rounded-3xl p-8 text-base text-slate-400 leading-relaxed italic border border-white/5 shadow-inner">
-                  "Aura, find a better deal on my recurring organic milk order."
-                </div>
-                <div className="bg-amber-500/10 rounded-3xl p-8 text-base text-amber-500 font-black border border-amber-500/10 shadow-lg shadow-amber-500/5 uppercase tracking-tight">
-                  "Found a 15% discount at Market Fresh. Order rerouted. Saved $2.10."
-                </div>
+              <div className="flex-1 space-y-6 relative z-10 overflow-y-auto max-h-[400px] mb-8 pr-2 custom-scrollbar">
+                {chatHistory.map((h, i) => (
+                  <div key={i} className={`p-6 rounded-3xl text-sm leading-relaxed ${
+                    h.role === 'user' ? 'bg-white/10 text-white ml-8 border border-white/10' : 'bg-amber-500/10 text-amber-500 font-black border border-amber-500/10'
+                  }`}>
+                    {h.text}
+                  </div>
+                ))}
+                {isLoading && <div className="text-amber-500 animate-pulse font-black text-[10px] uppercase tracking-widest">Aura is reasoning...</div>}
               </div>
 
-              <div className="mt-14 relative z-10">
+              <form onSubmit={handleChat} className="mt-auto relative z-10">
                 <input 
                   type="text" 
+                  value={chatInput}
+                  onChange={(e) => setChatInput(e.target.value)}
                   placeholder="COMMAND AURA..." 
                   className="w-full bg-white/5 border border-white/5 rounded-[2rem] px-8 py-6 text-white placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all font-black uppercase tracking-widest text-xs"
                 />
-              </div>
+              </form>
             </div>
           </div>
         </div>
