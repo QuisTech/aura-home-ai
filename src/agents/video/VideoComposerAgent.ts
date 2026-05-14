@@ -56,9 +56,12 @@ export class VideoComposerAgent {
       ffmpeg(videoPath)
         .input(audioPath)
         .outputOptions([
-          '-c:v copy',
+          '-c:v libx264',
+          '-b:v 5000k',
           '-c:a aac',
-          '-shortest'
+          '-b:a 192k',
+          '-map 0:v:0',
+          '-map 1:a:0'
         ])
         .on('end', () => {
           console.log(`✅ AURA COMPOSER: Narrated Master Demo ready at ${outputPath}`);
