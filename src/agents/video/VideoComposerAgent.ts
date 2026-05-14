@@ -36,11 +36,11 @@ export class VideoComposerAgent {
       
       ffmpeg(inputPath)
         .outputOptions([
-          '-vf scale=1280:-1',
+          '-vf scale=800:-1',
           '-vcodec libwebp',
           '-lossless 0',
-          '-compression_level 4',
-          '-q:v 75',
+          '-compression_level 6',
+          '-q:v 50',
           '-loop 0'
         ])
         .on('end', () => resolve(outputPath))
