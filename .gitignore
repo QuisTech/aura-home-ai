@@ -41,3 +41,10 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# Diagnostics & Secrets
+scripts/test-key.js
+scripts/list-models.js
+scripts/diagnostic-*
+.env
+.env.local
