@@ -61,7 +61,8 @@ export class VideoComposerAgent {
           '-c:a aac',
           '-b:a 192k',
           '-map 0:v:0',
-          '-map 1:a:0'
+          '-map 1:a:0',
+          '-shortest'
         ])
         .on('end', () => {
           console.log(`✅ AURA COMPOSER: Narrated Master Demo ready at ${outputPath}`);
