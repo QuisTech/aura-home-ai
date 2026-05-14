@@ -23,7 +23,7 @@ export class PlaywrightRecorder {
     });
 
     const page = await this.context.newPage();
-    await page.goto(options.url);
+    await page.goto(options.url, { timeout: 60000 });
     return page;
   }
 

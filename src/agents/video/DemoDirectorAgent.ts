@@ -10,7 +10,7 @@ export class DemoDirectorAgent {
 
   async executeWalkthrough(url: string) {
     const page = await this.recorder.startRecording({
-      url,
+      url: "http://localhost:3000",
       outputDir: './videos/raw',
       filename: `aura_demo_master_${Date.now()}`
     });
@@ -25,8 +25,6 @@ export class DemoDirectorAgent {
     ];
 
     console.log("🎬 AURA DIRECTOR: Starting 3-Minute Master Film Production...");
-    
-    // 1. Capture Hero Discovery (Detailed)
     await page.waitForTimeout(5000);
     await page.mouse.wheel(0, 800); 
     await page.waitForTimeout(8000);
@@ -37,7 +35,7 @@ export class DemoDirectorAgent {
 
     // 2. Navigate to Command Center
     console.log("🎬 AURA DIRECTOR: Navigating to Command Console...");
-    await page.click('a[href="/command"]');
+    await page.goto("http://localhost:3000/command", { timeout: 120000 });
     await page.waitForTimeout(10000);
 
     // 3. Detailed Dashboard Walkthrough
@@ -50,9 +48,17 @@ export class DemoDirectorAgent {
     await page.keyboard.press('Enter');
     await page.waitForTimeout(20000); // Extended wait for deep reasoning narration
 
-    // 5. Final Vision
+    // 5. Final Vision & Sovereign Ascent
+    console.log("🎬 AURA DIRECTOR: Executing Sovereign Ascent (Conclusion)...");
     await page.mouse.wheel(0, 1000);
-    await page.waitForTimeout(10000);
+    await page.waitForTimeout(15000);
+    
+    // Smooth cinematic scroll back to top for the finale
+    await page.evaluate(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    await page.waitForTimeout(30000); // Massive buffer for final sign-off
 
     const videoPath = await this.recorder.stopRecording();
     console.log(`✅ AURA DIRECTOR: 3-Minute Master Demo captured at ${videoPath}`);

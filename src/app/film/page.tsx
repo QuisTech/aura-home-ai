@@ -23,13 +23,14 @@ export default function FilmPage() {
         transition={{ duration: 1 }}
         className="relative z-10 w-full max-w-6xl aspect-video rounded-[3rem] overflow-hidden shadow-[0_100px_200px_-50px_rgba(0,0,0,0.8)] border border-white/10 bg-black"
       >
-        {/* We use the cinematic webp recording generated during the walkthrough */}
-        <img 
-          src="https://raw.githubusercontent.com/QuisTech/aura-home-ai/main/public/demo-cinematic.webp" 
-          alt="Aura Home AI Cinematic Demo" 
+        {/* Narrated Master Film */}
+        <video 
+          src="/demo-cinematic.mp4" 
+          controls 
+          autoPlay 
           className="w-full h-full object-cover"
         />
-        <div className="absolute bottom-12 left-12">
+        <div className="absolute bottom-12 left-12 pointer-events-none">
           <h1 className="text-4xl font-black text-white tracking-tighter uppercase mb-2">Aura: Sovereignty</h1>
           <p className="text-amber-500 text-[10px] font-black uppercase tracking-[0.4em]">Official Hackathon Demo · 2026</p>
         </div>
