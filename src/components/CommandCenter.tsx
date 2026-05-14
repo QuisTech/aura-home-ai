@@ -13,7 +13,7 @@ export default function AuraCommandCenter() {
   const [savings, setSavings] = useState(142.50);
   const [chatInput, setChatInput] = useState('');
   const [chatHistory, setChatHistory] = useState([
-    { role: 'model', text: 'Good morning. I am Aura. I have successfully disputed a duplicate Netflix charge and optimized your HVAC for the upcoming heatwave. How can I help you reclaim your time today?' }
+    { role: 'model', text: 'Multimodal Agentic Sensors: ONLINE. I have autonomously resolved 12 financial leaks and committed the audit to the Sovereign MongoDB Vault. Specify intent for further resolution.' }
   ]);
   const [isLoading, setIsLoading] = useState(false);
 
