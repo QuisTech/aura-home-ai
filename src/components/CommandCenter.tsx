@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Shield, CreditCard, Zap, ShoppingCart, MessageSquare, TrendingDown, Bell, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { VisionDiagnostic } from './dashboard/VisionDiagnostic';
 
 export default function AuraCommandCenter() {
   const [logs, setLogs] = useState([
@@ -135,35 +136,8 @@ export default function AuraCommandCenter() {
             </div>
 
             {/* Vision Diagnostics - Multimodal Proof */}
-            <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-8">
-                 <div className="flex items-center gap-3">
-                   <div className="w-2 h-2 bg-red-500 rounded-full animate-ping" />
-                   <span className="text-[10px] font-black uppercase tracking-[0.3em] text-red-500">Live Multimodal Stream</span>
-                 </div>
-              </div>
-              <h4 className="text-xl font-black uppercase tracking-tighter mb-8 text-slate-400">Vision Advisor Diagnostic</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                 <div className="aspect-video bg-slate-800 rounded-3xl relative overflow-hidden border border-white/5">
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
-                    <div className="absolute bottom-6 left-6">
-                       <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-1">Target: PERIMETER_7</p>
-                       <p className="text-xs font-bold text-white uppercase">[Guardian] Identified: COURIER (Verified)</p>
-                    </div>
-                    {/* Simulated Scanner Line */}
-                    <div className="absolute top-0 left-0 w-full h-[2px] bg-amber-400/30 animate-[scan_3s_ease-in-out_infinite]" />
-                 </div>
-                 <div className="flex flex-col justify-center space-y-6">
-                    <div className="p-6 bg-white/5 rounded-2xl border border-white/5">
-                       <p className="text-[8px] font-black text-slate-500 uppercase tracking-[0.4em] mb-2">Vision Reasoning</p>
-                       <p className="text-sm font-medium text-slate-300 italic">"Analyzing porch feed... Courier matches historical delivery window. Rerouting Guard Protocol to monitor package placement."</p>
-                    </div>
-                    <div className="flex gap-4">
-                       <div className="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[8px] font-black uppercase rounded-lg">Face Match: 98.2%</div>
-                       <div className="px-4 py-2 bg-blue-500/10 border border-blue-500/20 text-blue-500 text-[8px] font-black uppercase rounded-lg">Object ID: FEDEX_V1</div>
-                    </div>
-                 </div>
-              </div>
+            <div className="group">
+              <VisionDiagnostic />
             </div>
 
             {/* Live Reasoning Feed */}
