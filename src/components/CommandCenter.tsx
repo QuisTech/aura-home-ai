@@ -85,7 +85,13 @@ export default function AuraCommandCenter() {
         window.scrollTo({ top: 400, behavior: 'smooth' });
         setActiveAgent('VIS');
       } else if (sceneId === 'entering-query') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const logicTrace = document.getElementById('logic-trace');
+        if (logicTrace) {
+           const y = logicTrace.getBoundingClientRect().top + window.scrollY - 100;
+           window.scrollTo({ top: y, behavior: 'smooth' });
+        } else {
+           window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
         setActiveAgent('TIME');
         
         // Automated click simulation & terminal trace triggers
@@ -179,7 +185,7 @@ export default function AuraCommandCenter() {
           </div>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 items-start">
           
           {/* Main Dashboard Area */}
           <div className="lg:col-span-3 space-y-12">
@@ -226,7 +232,7 @@ export default function AuraCommandCenter() {
             </div>
 
             {/* Live Reasoning Feed */}
-            <div className="bg-white rounded-[4rem] p-14 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.05)] border border-slate-50">
+            <div id="logic-trace" className="bg-white rounded-[4rem] p-14 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.05)] border border-slate-50">
               <div className="flex justify-between items-center mb-14">
                 <h3 className="text-3xl font-black text-slate-900 tracking-[-0.04em] uppercase">Autonomous Logic Trace</h3>
                 <div className="flex gap-4">
@@ -265,7 +271,7 @@ export default function AuraCommandCenter() {
           </div>
 
           {/* Right Sidebar - 7-Agent Autonomy Engine */}
-          <div className="lg:col-span-1 space-y-12">
+          <div className="lg:col-span-1 lg:sticky lg:top-8 h-[calc(100vh-4rem)] space-y-12">
             <div className="bg-slate-900 rounded-[4rem] p-10 text-white h-full shadow-[0_60px_120px_-20px_rgba(0,0,0,0.4)] relative overflow-hidden flex flex-col">
               <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-[100px] -mr-40 -mt-40" />
               
