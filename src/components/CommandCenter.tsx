@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Shield, CreditCard, Zap, ShoppingCart, MessageSquare, TrendingDown, Bell, ArrowLeft } from 'lucide-react';
+import { Shield, CreditCard, Zap, ShoppingCart, TrendingDown, Bell, ArrowLeft, Clock, Eye, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { VisionDiagnostic } from './dashboard/VisionDiagnostic';
 
@@ -12,11 +12,118 @@ export default function AuraCommandCenter() {
   ]);
 
   const [savings, setSavings] = useState(142.50);
-  const [chatInput, setChatInput] = useState('');
-  const [chatHistory, setChatHistory] = useState([
-    { role: 'model', text: 'Multimodal Agentic Sensors: ONLINE. I have autonomously resolved 12 financial leaks and committed the audit to the Sovereign MongoDB Vault. Specify intent for further resolution.' }
-  ]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAuditSequenceActive, setIsAuditSequenceActive] = useState(false);
+  const [auditStatus, setAuditStatus] = useState("Active - $142.50 Saved");
+  const [auditLogs, setAuditLogs] = useState<string[]>([]);
+  const [activeAgent, setActiveAgent] = useState('FIN');
+
+  const executeAuditSequence = () => {
+    if (isAuditSequenceActive) return;
+    setIsAuditSequenceActive(true);
+    setAuditStatus("Running Deep Audit...");
+    setAuditLogs([]);
+    setIsLoading(true);
+
+    const logSteps = [
+      "[FIN] Initiating autonomous household audit...",
+      "[FIN] Querying Ledger 7 for redundant subscription creep...",
+      "[FIN] Discovered leak: Unused Paramount+ ($11.99/mo)",
+      "[FIN] Discovered Comcast surcharge: Dispute authorized ($15.00)",
+      "[TIME] Queueing cancellations and refund disputes...",
+      "[LEDGER] Vault sync: Committing 2 resolutions to private MongoDB...",
+      "[FIN] Audit complete. Saved $26.99/mo."
+    ];
+
+    let currentStep = 0;
+    const interval = setInterval(() => {
+      if (currentStep < logSteps.length) {
+        setAuditLogs(prev => [...prev, logSteps[currentStep]]);
+        currentStep++;
+      } else {
+        clearInterval(interval);
+        setIsLoading(false);
+        setSavings(169.49);
+        setAuditStatus("Active - $169.49 Saved");
+      }
+    }, 1500);
+  };
+
+  useEffect(() => {
+    const handleSceneChange = (e: Event) => {
+      const sceneId = (e as CustomEvent).detail.id;
+      console.log(`🎬 [CommandCenter] Reacting to scene: ${sceneId}`);
+
+      if (sceneId === 'dashboard-initial') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setSavings(142.50);
+        setIsAuditSequenceActive(false);
+        setAuditStatus("Active - $142.50 Saved");
+        setAuditLogs([]);
+        setActiveAgent('FIN');
+        setLogs([
+          { id: 1, type: 'finance', msg: 'Analyzing electricity bill... Discovered $12 solar credit missing.', time: '2m ago' },
+          { id: 2, type: 'security', msg: 'System armed. Front porch activity identified as "Courier".', time: '15m ago' },
+          { id: 3, type: 'shopping', msg: 'Eggs price spike at Walmart (+22%). Rerouted order to Whole Foods.', time: '1h ago' },
+        ]);
+      } else if (sceneId === 'finance-sentinel') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActiveAgent('FIN');
+      } else if (sceneId === 'guardian-protocol') {
+        window.scrollTo({ top: 100, behavior: 'smooth' });
+        setActiveAgent('GRD');
+      } else if (sceneId === 'pantry-architect') {
+        window.scrollTo({ top: 180, behavior: 'smooth' });
+        setActiveAgent('PNTRY');
+      } else if (sceneId === 'energy-optimizer') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActiveAgent('NRGY');
+      } else if (sceneId === 'wellness-advisor') {
+        window.scrollTo({ top: 220, behavior: 'smooth' });
+        setActiveAgent('WLNS');
+      } else if (sceneId === 'surveillance-view') {
+        window.scrollTo({ top: 400, behavior: 'smooth' });
+        setActiveAgent('VIS');
+      } else if (sceneId === 'entering-query') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActiveAgent('TIME');
+        
+        // Automated click simulation & terminal trace triggers
+        setTimeout(() => {
+          setIsAuditSequenceActive(true);
+          setAuditStatus("Running Deep Audit...");
+          setAuditLogs([]);
+          setIsLoading(true);
+
+          const logSteps = [
+            "[FIN] Initiating autonomous household audit...",
+            "[FIN] Querying Ledger 7 for redundant subscription creep...",
+            "[FIN] Discovered leak: Unused Paramount+ ($11.99/mo)",
+            "[FIN] Discovered Comcast surcharge: Dispute authorized ($15.00)",
+            "[TIME] Queueing cancellations and refund disputes...",
+            "[LEDGER] Vault sync: Committing 2 resolutions to private MongoDB...",
+            "[FIN] Audit complete. Saved $26.99/mo."
+          ];
+
+          let currentStep = 0;
+          const interval = setInterval(() => {
+            if (currentStep < logSteps.length) {
+              setAuditLogs(prev => [...prev, logSteps[currentStep]]);
+              currentStep++;
+            } else {
+              clearInterval(interval);
+              setIsLoading(false);
+              setSavings(169.49);
+              setAuditStatus("Active - $169.49 Saved");
+            }
+          }, 1500);
+        }, 1500);
+      }
+    };
+
+    window.addEventListener('aura-scene-change', handleSceneChange);
+    return () => window.removeEventListener('aura-scene-change', handleSceneChange);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -34,37 +141,12 @@ export default function AuraCommandCenter() {
         time: 'Just now'
       };
       setLogs(prev => [newLog, ...prev.slice(0, 4)]);
-      setSavings(s => s + (Math.random() * 0.5));
+      if (!isAuditSequenceActive) {
+        setSavings(s => s + (Math.random() * 0.5));
+      }
     }, 8000);
     return () => clearInterval(timer);
-  }, []);
-
-  const handleChat = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!chatInput.trim() || isLoading) return;
-
-    const userMsg = chatInput;
-    setChatInput('');
-    setChatHistory(prev => [...prev, { role: 'user', text: userMsg }]);
-    setIsLoading(true);
-
-    try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          message: userMsg, 
-          history: chatHistory.map(h => ({ role: h.role, parts: [{ text: h.text }] }))
-        })
-      });
-      const data = await res.json();
-      setChatHistory(prev => [...prev, { role: 'model', text: data.text }]);
-    } catch (err) {
-      setChatHistory(prev => [...prev, { role: 'model', text: "I'm currently optimizing home systems. Please try again in a moment." }]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, [isAuditSequenceActive]);
 
   return (
     <div className="min-h-screen bg-[#fafafa] p-4 md:p-10 font-['Inter'] selection:bg-amber-100">
@@ -104,7 +186,7 @@ export default function AuraCommandCenter() {
             
             {/* Header Title Section */}
             <div className="px-4">
-              <h1 className="text-6xl md:text-7xl font-black text-slate-900 tracking-[-0.06em] mb-4 uppercase leading-none">Home Sovereignty.</h1>
+              <h1 className="text-6xl md:text-7xl font-black text-slate-900 tracking-[-0.06em] mb-4 uppercase leading-none">Home Autonomous.</h1>
               <p className="text-slate-400 font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-3">
                 <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" /> Multimodal Agentic Sensors: Active · 7 Specialist Agents · 38 Decisions
               </p>
@@ -113,6 +195,7 @@ export default function AuraCommandCenter() {
             {/* Stats Grid - High Depth */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <StatCard 
+                id="finance-sentinel-card"
                 icon={<TrendingDown className="w-7 h-7 text-emerald-500" />}
                 label="Commercial Savings"
                 value={`$${savings.toFixed(2)}`}
@@ -120,6 +203,7 @@ export default function AuraCommandCenter() {
                 trend="+12% weekly"
               />
               <StatCard 
+                id="guardian-protocol-card"
                 icon={<Shield className="w-7 h-7 text-blue-500" />}
                 label="Guardian Protocol"
                 value="Secure"
@@ -127,6 +211,7 @@ export default function AuraCommandCenter() {
                 trend="3 interceptions"
               />
               <StatCard 
+                id="energy-optimizer-card"
                 icon={<Zap className="w-7 h-7 text-amber-500" />}
                 label="Power Balance"
                 value="+12.4%"
@@ -136,22 +221,22 @@ export default function AuraCommandCenter() {
             </div>
 
             {/* Vision Diagnostics - Multimodal Proof */}
-            <div className="group">
+            <div id="vision-advisor-card" className="group">
               <VisionDiagnostic />
             </div>
 
             {/* Live Reasoning Feed */}
             <div className="bg-white rounded-[4rem] p-14 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.05)] border border-slate-50">
               <div className="flex justify-between items-center mb-14">
-                <h3 className="text-3xl font-black text-slate-900 tracking-[-0.04em] uppercase">Sovereign Logic Trace</h3>
+                <h3 className="text-3xl font-black text-slate-900 tracking-[-0.04em] uppercase">Autonomous Logic Trace</h3>
                 <div className="flex gap-4">
-                   <AgentPillar label="FIN" active />
-                   <AgentPillar label="GRD" />
-                   <AgentPillar label="PNTRY" />
-                   <AgentPillar label="NRGY" />
-                   <AgentPillar label="WLNS" />
-                   <AgentPillar label="TIME" />
-                   <AgentPillar label="VIS" />
+                   <AgentPillar label="FIN" active={activeAgent === 'FIN'} />
+                   <AgentPillar label="GRD" active={activeAgent === 'GRD'} />
+                   <AgentPillar label="PNTRY" active={activeAgent === 'PNTRY'} />
+                   <AgentPillar label="NRGY" active={activeAgent === 'NRGY'} />
+                   <AgentPillar label="WLNS" active={activeAgent === 'WLNS'} />
+                   <AgentPillar label="TIME" active={activeAgent === 'TIME'} />
+                   <AgentPillar label="VIS" active={activeAgent === 'VIS'} />
                 </div>
               </div>
               <div className="space-y-12">
@@ -179,36 +264,52 @@ export default function AuraCommandCenter() {
             </div>
           </div>
 
-          {/* Right Sidebar - High Friction Assistant */}
+          {/* Right Sidebar - 7-Agent Autonomy Engine */}
           <div className="lg:col-span-1 space-y-12">
-            <div className="bg-slate-900 rounded-[4rem] p-12 text-white h-full shadow-[0_60px_120px_-20px_rgba(0,0,0,0.4)] relative overflow-hidden flex flex-col">
+            <div className="bg-slate-900 rounded-[4rem] p-10 text-white h-full shadow-[0_60px_120px_-20px_rgba(0,0,0,0.4)] relative overflow-hidden flex flex-col">
               <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-[100px] -mr-40 -mt-40" />
               
-              <div className="relative z-10 mb-14">
-                <h3 className="text-3xl font-black mb-3 tracking-tighter uppercase leading-none">Aura Chat</h3>
-                <p className="text-slate-600 text-[9px] font-black uppercase tracking-[0.4em]">Natural Logic</p>
+              <div className="relative z-10 mb-8">
+                <h3 className="text-3xl font-black mb-2 tracking-tighter uppercase leading-none">Autonomy Engine</h3>
+                <p className="text-amber-500 text-[9px] font-black uppercase tracking-[0.4em]">7-Agent Orchestration Matrix</p>
               </div>
 
-              <div className="flex-1 space-y-6 relative z-10 overflow-y-auto max-h-[400px] mb-8 pr-2 custom-scrollbar">
-                {chatHistory.map((h, i) => (
-                  <div key={i} className={`p-6 rounded-3xl text-sm leading-relaxed ${
-                    h.role === 'user' ? 'bg-white/10 text-white ml-8 border border-white/10' : 'bg-amber-500/10 text-amber-500 font-black border border-amber-500/10'
-                  }`}>
-                    {h.text}
-                  </div>
-                ))}
-                {isLoading && <div className="text-amber-500 animate-pulse font-black text-[10px] uppercase tracking-widest">Aura is reasoning...</div>}
+              {/* 7 Agents List */}
+              <div className="flex-1 space-y-4 relative z-10 overflow-y-auto mb-8 pr-2 custom-scrollbar">
+                <AgentStatusCard id="agent-card-fin" label="FIN" name="Finance Sentinel" status={activeAgent === 'FIN' && isAuditSequenceActive ? auditStatus : "Active - $142.50 Saved"} active={activeAgent === 'FIN'} icon={<CreditCard className="w-4 h-4" />} />
+                <AgentStatusCard id="agent-card-grd" label="GRD" name="Guardian Protocol" status="Active - Perimeter Secure" active={activeAgent === 'GRD'} icon={<Shield className="w-4 h-4" />} />
+                <AgentStatusCard id="agent-card-pntry" label="PNTRY" name="Pantry Architect" status="Active - Stock 98% Optimal" active={activeAgent === 'PNTRY'} icon={<ShoppingCart className="w-4 h-4" />} />
+                <AgentStatusCard id="agent-card-nrgy" label="NRGY" name="Energy Optimizer" status="Active - Load Optimized (-25%)" active={activeAgent === 'NRGY'} icon={<Zap className="w-4 h-4" />} />
+                <AgentStatusCard id="agent-card-wlns" label="WLNS" name="Wellness Advisor" status="Active - AQI: 42 (Excellent)" active={activeAgent === 'WLNS'} icon={<Activity className="w-4 h-4" />} />
+                <AgentStatusCard id="agent-card-time" label="TIME" name="Timeline Coordinator" status="Active - 38 Decisions Synced" active={activeAgent === 'TIME'} icon={<Clock className="w-4 h-4" />} />
+                <AgentStatusCard id="agent-card-vis" label="VIS" name="Vision Advisor" status="Active - CCTV Perimeter Active" active={activeAgent === 'VIS'} icon={<Eye className="w-4 h-4" />} />
               </div>
 
-              <form onSubmit={handleChat} className="mt-auto relative z-10">
-                <input 
-                  type="text" 
-                  value={chatInput}
-                  onChange={(e) => setChatInput(e.target.value)}
-                  placeholder="COMMAND AURA..." 
-                  className="w-full bg-white/5 border border-white/5 rounded-[2rem] px-8 py-6 text-white placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all font-black uppercase tracking-widest text-xs"
-                />
-              </form>
+              {/* Audit Progress Console Terminal */}
+              {isAuditSequenceActive && (
+                <div className="bg-black/50 border border-white/10 rounded-2xl p-4 font-mono text-[10px] text-emerald-400 space-y-1 mb-6 h-28 overflow-y-auto">
+                  {auditLogs.map((log, idx) => (
+                    <div key={idx} className="leading-tight">{log}</div>
+                  ))}
+                  {isLoading && <div className="text-amber-500 animate-pulse">Running agent reasoner...</div>}
+                </div>
+              )}
+
+              <div className="mt-auto relative z-10">
+                <button
+                  id="trigger-audit-btn"
+                  onClick={executeAuditSequence}
+                  disabled={isAuditSequenceActive}
+                  className={`w-full border rounded-[2rem] py-5 px-8 transition-all font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 ${
+                    isAuditSequenceActive 
+                      ? 'bg-amber-500/10 border-amber-500/30 text-amber-500 cursor-not-allowed'
+                      : 'bg-white text-slate-900 border-white hover:bg-amber-500 hover:text-white hover:border-amber-500 hover:shadow-lg hover:shadow-amber-500/20'
+                  }`}
+                >
+                  <Activity className={`w-4 h-4 ${isAuditSequenceActive ? 'animate-spin' : 'animate-pulse'}`} />
+                  {isAuditSequenceActive ? 'AUDIT IN PROGRESS...' : 'EXECUTE CRITICAL AUDIT'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -225,8 +326,8 @@ const AgentPillar = ({ label, active }: any) => (
   </div>
 );
 
-const StatCard = ({ icon, label, value, sub, trend }: any) => (
-  <div className="bg-white p-12 rounded-[4rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)] border border-white hover:translate-y-[-8px] transition-all duration-500 group">
+const StatCard = ({ id, icon, label, value, sub, trend }: any) => (
+  <div id={id} className="bg-white p-12 rounded-[4rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)] border border-white hover:translate-y-[-8px] transition-all duration-500 group">
     <div className="w-16 h-16 bg-[#fafafa] rounded-[1.5rem] flex items-center justify-center mb-10 group-hover:scale-110 transition-transform shadow-inner">
       {icon}
     </div>
@@ -243,5 +344,33 @@ const StatCard = ({ icon, label, value, sub, trend }: any) => (
       <p className="text-emerald-500 text-[10px] font-black uppercase tracking-[0.2em]">{trend}</p>
     </div>
     <p className="text-slate-400 text-xs font-bold uppercase tracking-widest opacity-60">{sub}</p>
+  </div>
+);
+
+const AgentStatusCard = ({ id, label, name, status, active, icon }: any) => (
+  <div id={id} className={`p-4 rounded-2xl border transition-all duration-300 ${
+    active 
+      ? 'bg-amber-500/10 border-amber-500/30 shadow-lg shadow-amber-500/5 scale-[1.02]' 
+      : 'bg-white/5 border-white/5 hover:border-white/10'
+  }`}>
+    <div className="flex items-center gap-3">
+      <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+        active ? 'bg-amber-500 text-white' : 'bg-white/10 text-slate-400'
+      }`}>
+        {icon}
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-black uppercase tracking-tight text-white truncate">{name}</p>
+          <div className="flex items-center gap-1.5">
+            <span className={`w-1.5 h-1.5 rounded-full ${
+              active ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500 animate-pulse'
+            }`} />
+            <span className="text-[8px] font-black tracking-widest text-slate-500 uppercase">{label}</span>
+          </div>
+        </div>
+        <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider mt-1 truncate">{status}</p>
+      </div>
+    </div>
   </div>
 );

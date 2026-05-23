@@ -39,10 +39,24 @@ export const Hero = () => {
     return () => clearInterval(timer);
   }, []);
 
+  React.useEffect(() => {
+    const handleSceneChange = (e: Event) => {
+      const sceneId = (e as CustomEvent).detail.id;
+      console.log(`🎬 [LandingPage] Reacting to scene: ${sceneId}`);
+      if (sceneId === 'hero') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (sceneId === 'zen-scrolled') {
+        window.scrollTo({ top: 800, behavior: 'smooth' });
+      }
+    };
+    window.addEventListener('aura-scene-change', handleSceneChange);
+    return () => window.removeEventListener('aura-scene-change', handleSceneChange);
+  }, []);
+
   return (
     <>
       {/* Fold 1: Pure Visual Inspiration (Carousel) */}
-      <section className="relative h-screen w-full overflow-hidden bg-slate-900">
+      <section data-scene="hero" className="relative h-screen w-full overflow-hidden bg-slate-900">
         <div className="absolute inset-0 flex">
           {images.map((img, i) => (
             <motion.img 
@@ -75,7 +89,7 @@ export const Hero = () => {
       </section>
 
     {/* Fold 2: The Logic Pipeline */}
-    <section className="py-32 px-8 bg-slate-950 text-white relative overflow-hidden">
+    <section data-scene="zen-scrolled" className="py-32 px-8 bg-slate-950 text-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto text-center relative z-10">
         <h2 className="text-4xl md:text-7xl font-black tracking-tighter mb-20 uppercase leading-none">
           Sensor. <span className="text-amber-500">Reason.</span> Resolve.
