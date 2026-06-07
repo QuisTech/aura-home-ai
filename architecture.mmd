@@ -1,0 +1,59 @@
+graph TD
+    %% Styling
+    classDef core fill:#0f172a,stroke:#38bdf8,stroke-width:3px,color:#fff,font-weight:bold
+    classDef agent fill:#1e293b,stroke:#f59e0b,stroke-width:2px,color:#fcd34d,rx:10px,ry:10px
+    classDef input fill:#334155,stroke:#10b981,stroke-width:2px,color:#a7f3d0,stroke-dasharray: 5 5
+    classDef output fill:#334155,stroke:#ef4444,stroke-width:2px,color:#fecaca
+
+    %% Core Components
+    C[Aura Home AI<br/>Command Center / Orchestrator]:::core
+
+    %% Inputs
+    subgraph Sensors [Multimodal Sensory Inputs]
+        S1(Vision Diagnostics / CCTV):::input
+        S2(Utility API Feeds):::input
+        S3(Financial Ledgers / Plaid):::input
+        S4(IoT / HVAC Telemetry):::input
+    end
+
+    %% 7-Agent Autonomy Engine
+    subgraph Autonomy [7-Agent Autonomy Engine]
+        A1[Finance Sentinel <br/>FIN]:::agent
+        A2[Guardian Protocol <br/>GRD]:::agent
+        A3[Pantry Architect <br/>PNTRY]:::agent
+        A4[Energy Optimizer <br/>NRGY]:::agent
+        A5[Wellness Advisor <br/>WLNS]:::agent
+        A6[Vision Advisor <br/>VIS]:::agent
+        A7[Timeline Coordinator <br/>TIME]:::agent
+    end
+
+    %% Outputs
+    subgraph Actions [Autonomous Resolutions]
+        O1(Dispute / Refund Submissions):::output
+        O2(Grocery Rerouting / Ordering):::output
+        O3(Thermostat Adjustments):::output
+        O4(Perimeter Threat Alerts):::output
+    end
+
+    %% Connections
+    S1 --> |Video Stream| A6
+    S2 --> |Rates| A4
+    S3 --> |Transactions| A1
+    S4 --> |Temp/Air Quality| A5
+    S1 -.-> |Motion| A2
+
+    A1 <--> C
+    A2 <--> C
+    A3 <--> C
+    A4 <--> C
+    A5 <--> C
+    A6 <--> C
+    A7 <--> C
+
+    %% Cross agent logic
+    C --> |Coordinate 38+ Decisions| A7
+
+    A1 --> |Execute Audit| O1
+    A3 --> |Market Shift| O2
+    A4 --> |Load Balance| O3
+    A2 & A6 --> |Security Breach| O4

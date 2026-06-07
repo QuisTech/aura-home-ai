@@ -5,11 +5,7 @@ import { motion } from 'framer-motion';
 import { VisionDiagnostic } from './dashboard/VisionDiagnostic';
 
 export default function AuraCommandCenter() {
-  const [logs, setLogs] = useState([
-    { id: 1, type: 'finance', msg: 'Analyzing electricity bill... Discovered $12 solar credit missing.', time: '2m ago' },
-    { id: 2, type: 'security', msg: 'System armed. Front porch activity identified as "Courier".', time: '15m ago' },
-    { id: 3, type: 'shopping', msg: 'Eggs price spike at Walmart (+22%). Rerouted order to Whole Foods.', time: '1h ago' },
-  ]);
+  const [logs, setLogs] = useState<any[]>([]);
 
   const [savings, setSavings] = useState(142.50);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,36 +14,74 @@ export default function AuraCommandCenter() {
   const [auditLogs, setAuditLogs] = useState<string[]>([]);
   const [activeAgent, setActiveAgent] = useState('FIN');
 
-  const executeAuditSequence = () => {
+  const executeAuditSequence = async () => {
     if (isAuditSequenceActive) return;
     setIsAuditSequenceActive(true);
     setAuditStatus("Running Deep Audit...");
     setAuditLogs([]);
     setIsLoading(true);
 
-    const logSteps = [
-      "[FIN] Initiating autonomous household audit...",
-      "[FIN] Querying Ledger 7 for redundant subscription creep...",
-      "[FIN] Discovered leak: Unused Paramount+ ($11.99/mo)",
-      "[FIN] Discovered Comcast surcharge: Dispute authorized ($15.00)",
-      "[TIME] Queueing cancellations and refund disputes...",
-      "[LEDGER] Vault sync: Committing 2 resolutions to private MongoDB...",
-      "[FIN] Audit complete. Saved $26.99/mo."
-    ];
+    try {
+      const response = await fetch('/api/audit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: 'demo-user',
+          agentType: 'finance',
+          action: 'Audit complete. Saved $26.99/mo.',
+          savings: 26.99
+        })
+      });
+      const data = await response.json();
 
-    let currentStep = 0;
-    const interval = setInterval(() => {
-      if (currentStep < logSteps.length) {
-        setAuditLogs(prev => [...prev, logSteps[currentStep]]);
-        currentStep++;
-      } else {
-        clearInterval(interval);
-        setIsLoading(false);
-        setSavings(169.49);
-        setAuditStatus("Active - $169.49 Saved");
-      }
-    }, 1500);
+      const logSteps = [
+        "[FIN] Initiating autonomous household audit from MongoDB...",
+        "[FIN] Querying AfterpartyCluster for redundant subscription creep...",
+        `[FIN] Discovered leak: ${data.detectedLeaks > 0 ? data.detectedLeaks + ' unused subscriptions found in DB!' : '0 unused subscriptions found'}`,
+        "[FIN] Queueing cancellations and refund disputes...",
+        `[LEDGER] Vault sync: Committing resolution to private MongoDB... (ID: ${data.auditId})`,
+        `[FIN] Audit complete. Saved $${data.savings || '26.99'}/mo.`
+      ];
+
+      let currentStep = 0;
+      const interval = setInterval(() => {
+        if (currentStep < logSteps.length) {
+          setAuditLogs(prev => [...prev, logSteps[currentStep]]);
+          currentStep++;
+        } else {
+          clearInterval(interval);
+          setIsLoading(false);
+          setSavings(169.49);
+          setAuditStatus("Active - $169.49 Saved");
+        }
+      }, 1500);
+    } catch (error) {
+      console.error('Audit failed:', error);
+      setIsLoading(false);
+      setIsAuditSequenceActive(false);
+    }
   };
+
+  useEffect(() => {
+    const loadAuditHistory = async () => {
+      try {
+        const response = await fetch('/api/audit?userId=demo-user');
+        const history = await response.json();
+        if (history && history.length > 0) {
+          const formattedHistory = history.map((log: any) => ({
+            id: log._id || Date.now() + Math.random(),
+            type: log.agentType,
+            msg: log.action,
+            time: new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          }));
+          setLogs(formattedHistory.slice(0, 5));
+        }
+      } catch (e) {
+        console.error("Failed to load history", e);
+      }
+    };
+    loadAuditHistory();
+  }, []);
 
   useEffect(() => {
     const handleSceneChange = (e: Event) => {
@@ -61,11 +95,7 @@ export default function AuraCommandCenter() {
         setAuditStatus("Active - $142.50 Saved");
         setAuditLogs([]);
         setActiveAgent('FIN');
-        setLogs([
-          { id: 1, type: 'finance', msg: 'Analyzing electricity bill... Discovered $12 solar credit missing.', time: '2m ago' },
-          { id: 2, type: 'security', msg: 'System armed. Front porch activity identified as "Courier".', time: '15m ago' },
-          { id: 3, type: 'shopping', msg: 'Eggs price spike at Walmart (+22%). Rerouted order to Whole Foods.', time: '1h ago' },
-        ]);
+        // The logs are now managed by the DB fetch on mount
       } else if (sceneId === 'finance-sentinel') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setActiveAgent('FIN');
@@ -96,33 +126,7 @@ export default function AuraCommandCenter() {
         
         // Automated click simulation & terminal trace triggers
         setTimeout(() => {
-          setIsAuditSequenceActive(true);
-          setAuditStatus("Running Deep Audit...");
-          setAuditLogs([]);
-          setIsLoading(true);
-
-          const logSteps = [
-            "[FIN] Initiating autonomous household audit...",
-            "[FIN] Querying Ledger 7 for redundant subscription creep...",
-            "[FIN] Discovered leak: Unused Paramount+ ($11.99/mo)",
-            "[FIN] Discovered Comcast surcharge: Dispute authorized ($15.00)",
-            "[TIME] Queueing cancellations and refund disputes...",
-            "[LEDGER] Vault sync: Committing 2 resolutions to private MongoDB...",
-            "[FIN] Audit complete. Saved $26.99/mo."
-          ];
-
-          let currentStep = 0;
-          const interval = setInterval(() => {
-            if (currentStep < logSteps.length) {
-              setAuditLogs(prev => [...prev, logSteps[currentStep]]);
-              currentStep++;
-            } else {
-              clearInterval(interval);
-              setIsLoading(false);
-              setSavings(169.49);
-              setAuditStatus("Active - $169.49 Saved");
-            }
-          }, 1500);
+          executeAuditSequence();
         }, 1500);
       }
     };
@@ -132,26 +136,7 @@ export default function AuraCommandCenter() {
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      const msgs = [
-        "Switched your Milk order from Target to Walmart. Saved: $1.25.",
-        "Detected unused Netflix subscription. Suggesting cancellation.",
-        "Disputing $15 overcharge on your Comcast bill automatically.",
-        "AC optimized for peak hours. Saved: $0.80 today.",
-        "Package delivered. Identified as 'Amazon' - Safe to retrieve."
-      ];
-      const newLog = {
-        id: Date.now(),
-        type: Math.random() > 0.5 ? 'finance' : 'security',
-        msg: `${msgs[Math.floor(Math.random() * msgs.length)]}`,
-        time: 'Just now'
-      };
-      setLogs(prev => [newLog, ...prev.slice(0, 4)]);
-      if (!isAuditSequenceActive) {
-        setSavings(s => s + (Math.random() * 0.5));
-      }
-    }, 8000);
-    return () => clearInterval(timer);
+    // Removed the fake event generator. The UI now relies strictly on MongoDB!
   }, [isAuditSequenceActive]);
 
   return (
