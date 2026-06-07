@@ -11,30 +11,37 @@ export async function POST(req: Request) {
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `You are the ${agentType} AI agent for a highly advanced autonomous smart home.
-Make a single, realistic autonomous decision or observation for your specific domain right now. 
-Keep it to exactly one short, elite, action-oriented sentence.
-For example, if you are 'vision', you might say: 'Identified Amazon delivery on porch, securing perimeter.'
-If you are 'energy', you might say: 'Grid peak pricing detected, lowering HVAC load by 12%.'
-Do not output anything else. No quotes.`;
+The core goal of this system is to save the homeowner money, time, and optimize their life.
+Generate a realistic, autonomous decision for your specific domain right now. 
+Every decision MUST result in a calculated financial or time savings for the user.
+Return ONLY a valid JSON object with no markdown formatting:
+{
+  "action": "<1 punchy elite sentence describing the action taken>",
+  "breakdown": "<1-2 sentences explaining the advanced AI reasoning, and exactly how it benefits the user financially or operationally.>",
+  "estimatedSavings": <a number representing dollar savings, e.g. 2.50>
+}`;
 
     const result = await model.generateContent(prompt);
-    const actionText = result.response.text().trim();
+    let text = result.response.text().replace(/```json/g, '').replace(/```/g, '').trim();
+    const aiData = JSON.parse(text);
 
     // Call the database to ensure connection is warm
     await connectToDatabase();
 
+    const fullActionText = `[${agentType.toUpperCase()} RESOLVE] ${aiData.action} — BREAKDOWN: ${aiData.breakdown}`;
+
     const dbResult = await saveAuditLog({
       userId,
       agentType,
-      action: `[Gemini Autonomous] ${actionText}`,
-      savings: Math.floor(Math.random() * 5), // optional small savings
+      action: fullActionText,
+      savings: aiData.estimatedSavings || 0,
       resolved: true
     });
 
     const newLog = {
       _id: dbResult.insertedId,
       agentType,
-      action: `[Gemini Autonomous] ${actionText}`,
+      action: fullActionText,
       timestamp: new Date().toISOString()
     };
 
