@@ -87,12 +87,37 @@ export default function AuraCommandCenter() {
         }));
         setLogs(formattedHistory.slice(0, 5));
       } else {
+        // Show loading state while Gemini generates an action
         setLogs([{
-          id: 'empty',
+          id: 'loading',
           type: agentType,
-          msg: `No recent logs for ${label} agent in MongoDB Vault.`,
+          msg: `[Gemini] Waking up ${label} agent to analyze home state...`,
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }]);
+
+        // Autonomously generate a real action via Gemini
+        const genResponse = await fetch('/api/generate-action', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ agentType })
+        });
+        const genData = await genResponse.json();
+
+        if (genData.success) {
+           setLogs([{
+             id: genData.log._id,
+             type: genData.log.agentType,
+             msg: genData.log.action,
+             time: new Date(genData.log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+           }]);
+        } else {
+          setLogs([{
+            id: 'error',
+            type: agentType,
+            msg: `No recent logs for ${label} agent in MongoDB Vault.`,
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          }]);
+        }
       }
     } catch (e) {
       console.error("Failed to load history", e);
