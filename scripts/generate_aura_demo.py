@@ -3,39 +3,32 @@ import os
 import glob
 import subprocess
 import shutil
+import math
 # pyrefly: ignore [missing-import]
 from playwright.async_api import async_playwright
 
-# 1. Narrator voiceover text
+# 1. Narrator voiceover text - Crisp, Snappy, Fast, and Purposeful
 VOICEOVER_TEXT = (
-    "Welcome to Aura Home AI, the world's first truly autonomous home orchestration engine. "
-    "We are currently living in a cognitive crisis where our digital lives are fragmented and our homes are unmanaged enterprises of hidden costs and security gaps. "
-    "Aura is the solution. We begin with inspiration. "
-    "Our Zen discovery sequence, which you see here, is designed to create a sanctuary of focus, calming the mind before the technology even begins to reason. "
-    "Aura is architected around the seven pillars of autonomy. "
-    "This isn't just a collection of smart devices. It's a higher performance multi-agent node. "
-    "Under the system, our home's resources, finances, and security layers are unified under a single cognitive framework. "
-    "The logic is elegant and robust. We continuously sense, reason, persist, and resolve, transforming chaotic sensory noise into clean, automated action. "
-    "Let's step into the command console, the cockpit of your digital life. "
-    "Here, the complexity of seven specialized agents is translated into actionable consumer value. "
-    "Notice the live logs Aura is sensing, reasoning, and resolving in the background without a single human click. "
-    "This is the definition of agentic autonomy. "
-    "Let's look at each of the seven active nodes in our sidebar orchestration matrix. "
-    "First, our finance sentinel autonomously audits household expenditures in real time. "
-    "It continuously scans bank statements and utility invoices to identify redundant subscription creep. "
-    "The Sentinel has already resolved 12 distinct financial leaks, saving the household hundreds of dollars automatically. "
-    "Second, our guardian protocol manages home security and smart locks, monitoring entry points to ensure perimeter safety and arming the home when residents leave. "
-    "Third, the pantry architect tracks kitchen stock and automates grocery purchases. "
-    "If a price spike is detected on common items, it compares local market indices and reroutes orders to optimize food budgets. "
-    "Fourth, the energy optimizer coordinates smart thermostats and solar grids, shifting HVAC load cycles during peak use periods to reduce carbon footprints by 25%. "
-    "Fifth, the wellness adviser manages indoor air quality, humidity levels, and ambient lighting protocols to foster a healthy, stress-free living environment. "
-    "Sixth, the vision adviser processes CCTV feeds using Gemini multimodal vision. "
-    "It classifies courier deliveries and threat levels with 98% match accuracy, committing visual logs via the model context protocol. "
-    "Finally, our timeline coordinator unifies scheduling and triggers critical audit sequences. "
-    "When executing a deep dive audit, the engine reasons across all nodes, cancels leaks, resolves billing overcharges, and commits immutable receipts to our secure vault."
+    "Welcome to Aura Home AI. Instead of a standard smart home, we've built a multi-agent orchestration node. "
+    "We begin with the Zen discovery sequence, an elegant design that calms the mind before the technology reasons. "
+    "Aura operates on seven pillars of autonomy, continuously sensing, reasoning, persisting, and resolving. "
+    "Let's step into the command console—the cockpit of your digital life. "
+    "Here, seven specialized agents translate complex data into actionable consumer value. "
+    "Notice the autonomous logic trace resolving issues in the background without a single human click. "
+    "Let's review the active nodes. "
+    "The Finance Sentinel audits household expenditures, resolving subscription leaks automatically. "
+    "The Guardian Protocol secures your perimeter and manages smart locks. "
+    "The Pantry Architect reroutes grocery orders to optimize budgets. "
+    "The Energy Optimizer sheds HVAC loads during peak hours, reducing your carbon footprint. "
+    "The Wellness Adviser manages air quality and lighting for a healthy environment. "
+    "The Vision Adviser processes CCTV feeds with Gemini multimodal vision to classify threats. "
+    "Finally, the Timeline Coordinator unifies scheduling and triggers critical audit sweeps. "
+    "Let's execute a deep dive audit. "
+    "Watch as Aura simultaneously secures the perimeter, adjusts the HVAC, and cancels unused subscriptions, committing immutable receipts to our secure MongoDB vault. "
+    "Aura Home AI. Total autonomy, finally realized."
 )
 
-# 2. Virtual cursor CSS/JS to inject on page load
+# 2. Virtual cursor CSS/JS
 CURSOR_INJECT_JS = """
 const cursor = document.createElement('div');
 cursor.id = 'virtual-cursor';
@@ -50,7 +43,17 @@ cursor.style.pointerEvents = 'none';
 cursor.style.zIndex = '99999';
 cursor.style.transform = 'translate(-50%, -50%)';
 cursor.style.transition = 'width 0.1s, height 0.1s, background-color 0.1s';
-document.body.appendChild(cursor);
+
+function initCursor() {
+  if (!document.getElementById('virtual-cursor')) {
+    document.body.appendChild(cursor);
+  }
+}
+if (document.body) {
+  initCursor();
+} else {
+  document.addEventListener('DOMContentLoaded', initCursor);
+}
 
 document.addEventListener('mousemove', (e) => {
   cursor.style.left = e.clientX + 'px';
@@ -60,7 +63,7 @@ document.addEventListener('mousemove', (e) => {
 document.addEventListener('mousedown', () => {
   cursor.style.width = '8px';
   cursor.style.height = '8px';
-  cursor.style.backgroundColor = '#f59e0b'; // amber-500
+  cursor.style.backgroundColor = '#f59e0b';
   cursor.style.boxShadow = '0 0 8px #f59e0b, 0 0 15px #f59e0b';
 });
 
@@ -72,11 +75,10 @@ document.addEventListener('mouseup', () => {
 });
 """
 
-# Mouse coordinate state tracking
 current_mouse_x = 640
 current_mouse_y = 360
 
-async def smooth_move_to(page, selector):
+async def smooth_move_to(page, selector, offset_x=0, offset_y=0):
     global current_mouse_x, current_mouse_y
     locator = page.locator(selector).first
     box = await locator.bounding_box()
@@ -84,10 +86,10 @@ async def smooth_move_to(page, selector):
         print(f"Warning: Selector '{selector}' bounding box not found.")
         return
     
-    target_x = box["x"] + box["width"] / 2
-    target_y = box["y"] + box["height"] / 2
+    target_x = box["x"] + box["width"] / 2 + offset_x
+    target_y = box["y"] + box["height"] / 2 + offset_y
     
-    steps = 22
+    steps = 15
     for i in range(1, steps + 1):
         t = i / steps
         t_smooth = t * t * (3 - 2 * t)
@@ -98,33 +100,56 @@ async def smooth_move_to(page, selector):
         
     current_mouse_x = target_x
     current_mouse_y = target_y
-    await asyncio.sleep(0.12)
+    await asyncio.sleep(0.05)
 
 async def smooth_click(page, selector):
     await smooth_move_to(page, selector)
     await page.mouse.down()
-    await asyncio.sleep(0.08)
+    await asyncio.sleep(0.04)
     await page.mouse.up()
-    await asyncio.sleep(0.2)
+    await asyncio.sleep(0.1)
 
 async def smooth_scroll_to(page, target_percent):
     current_y = await page.evaluate("window.scrollY")
     max_scroll = await page.evaluate("document.documentElement.scrollHeight - window.innerHeight")
     target_y = int(target_percent * max_scroll)
     
-    step = 8 if target_y > current_y else -8
+    step = 25 if target_y > current_y else -25
     if step == 0:
         return
     steps_count = int(abs(target_y - current_y) / abs(step))
     
-    print(f"Scrolling smoothly to {int(target_percent * 100)}% depth...")
     for _ in range(steps_count):
         current_y += step
         await page.evaluate(f"window.scrollTo(0, {current_y})")
-        await asyncio.sleep(0.008) # smooth high framerate scroll wait
+        await asyncio.sleep(0.005) 
         
     await page.evaluate(f"window.scrollTo(0, {target_y})")
-    await asyncio.sleep(0.6) # allow visual layout elements to settle
+    await asyncio.sleep(0.3)
+
+async def random_hover(page, x_center, y_center, radius=30, duration=1.0):
+    global current_mouse_x, current_mouse_y
+    steps = int(duration * 30)  
+    for i in range(steps):
+        t = i / steps
+        angle = t * math.pi * 4
+        current_x = x_center + math.sin(angle) * radius * math.sin(t * math.pi)
+        current_y = y_center + math.cos(angle) * radius * math.cos(t * math.pi)
+        await page.mouse.move(current_x, current_y)
+        current_mouse_x = current_x
+        current_mouse_y = current_y
+        await asyncio.sleep(1/30)
+
+async def smooth_scroll_element(page, selector, target_percent):
+    await page.evaluate(f"""
+        const el = document.querySelector("{selector}");
+        if (el) {{
+            const maxScroll = el.scrollHeight - el.clientHeight;
+            const targetY = maxScroll * {target_percent};
+            el.scrollTo({{top: targetY, behavior: 'smooth'}});
+        }}
+    """)
+    await asyncio.sleep(0.8)
 
 def generate_voiceover(text, output_file):
     print(f"1. Synthesizing voiceover narration with edge-tts...")
@@ -149,6 +174,7 @@ async def record_walkthrough(url, temp_dir):
         browser = await p.chromium.launch(headless=True)
         context = await browser.new_context(
             viewport={"width": 1280, "height": 720},
+            device_scale_factor=1.0, # Removed zoom so the whole dashboard is visible
             record_video_dir=temp_dir,
             record_video_size={"width": 1280, "height": 720}
         )
@@ -158,72 +184,97 @@ async def record_walkthrough(url, temp_dir):
         
         await page.add_init_script(CURSOR_INJECT_JS)
         await page.goto(url, wait_until="networkidle")
+        await page.wait_for_timeout(1000)
         
-        # --- SCENE 1: Landing Page Hero ---
-        # "Welcome to Aura Home AI..."
-        print("   - Scene 1: Landing Page Hero")
-        await page.wait_for_timeout(18000) 
+        # --- SCENE 1: Landing Page (Fast & Purposeful) ---
+        print("   - Scene 1: Landing Page")
+        # Welcome
+        await random_hover(page, 640, 360, radius=30, duration=4.0)
         
-        # --- SCENE 2: Zen Discovery Sequence ---
-        # "Our Zen discovery sequence..."
-        print("   - Scene 2: Zen Discovery Fold")
-        await smooth_scroll_to(page, 0.25) # Scroll down to pipeline section
-        await page.wait_for_timeout(15000)
+        # Zen sequence
+        await smooth_scroll_to(page, 0.25)
+        await smooth_move_to(page, "text='01. SENSE'")
+        await random_hover(page, 200, 500, radius=10, duration=1.0)
+        await smooth_move_to(page, "text='04. RESOLVE'")
+        await random_hover(page, 1000, 500, radius=10, duration=1.0)
         
-        # --- SCENE 3: Seven Pillars of Autonomy ---
-        # "Aura is architected around the seven pillars..."
-        print("   - Scene 3: Seven Pillars Fold")
-        await smooth_scroll_to(page, 0.55) # Scroll down to Aura Seven section
-        await page.wait_for_timeout(20000)
+        # Seven Pillars
+        await smooth_scroll_to(page, 0.55)
+        await smooth_move_to(page, "text='Finance Sentinel'")
+        await random_hover(page, 300, 300, radius=10, duration=1.0)
+        await smooth_move_to(page, "text='Sovereign Vault'")
+        await random_hover(page, 1000, 600, radius=15, duration=1.5)
         
-        # --- SCENE 4: Navigate to Command Console ---
-        # "Let's step into the command console..."
-        print("   - Scene 4: Transition to Command Console")
-        await smooth_scroll_to(page, 0.0) # Scroll to top
-        await smooth_click(page, "nav a[href='/command']")
-        await page.wait_for_timeout(8000) # Give time for route and load
+        # Launch Console
+        await smooth_scroll_to(page, 0.0)
+        await smooth_click(page, "a:has-text('Launch Console')")
+        await page.wait_for_timeout(2500)
         
-        # --- SCENE 5: Command Console Observation ---
-        # "Here, the complexity of seven specialized agents is translated..."
-        print("   - Scene 5: Command Console Observation")
-        await page.wait_for_timeout(15000)
+        # --- SCENE 2: Command Console Deep Tour ---
+        print("   - Scene 2: Command Console")
+        # Pan around top stats to show layout
+        await smooth_move_to(page, "#finance-sentinel-card")
+        await smooth_move_to(page, "#energy-optimizer-card")
         
-        # --- SCENE 6: The 7 Active Nodes ---
-        print("   - Scene 6: Agent Navigation")
-        # 1. Finance Sentinel
+        # Notice the autonomous logic trace...
+        await smooth_scroll_to(page, 0.8) # Scroll down to reveal the Logic Trace!
+        await smooth_move_to(page, "#logic-trace")
+        await random_hover(page, 600, 600, radius=40, duration=4.0)
+        
+        # "Let's review the active nodes..."
+        await smooth_scroll_to(page, 0.35) # Scroll back up slightly to perfectly frame the Agent Diagnostics card in the center
+        await page.wait_for_timeout(1000)
+        
+        # Agent Iteration: Actively click the sidebar, then pan back to the center content to show the changes!
+        print("   - Scene 3: Agent Navigation")
+        
+        # 1. Finance Sentinel (6s)
         await smooth_click(page, "#agent-card-fin")
-        await page.wait_for_timeout(15000)
+        await smooth_move_to(page, "#vision-advisor-card")
+        await random_hover(page, 500, 400, radius=20, duration=3.0)
         
-        # 2. Guardian Protocol
+        # 2. Guardian Protocol (4s)
         await smooth_click(page, "#agent-card-grd")
-        await page.wait_for_timeout(10000)
+        await smooth_move_to(page, "#vision-advisor-card")
+        await random_hover(page, 500, 400, radius=20, duration=2.0)
         
-        # 3. Pantry Architect
+        # 3. Pantry Architect (4s)
         await smooth_click(page, "#agent-card-pntry")
-        await page.wait_for_timeout(12000)
+        await smooth_move_to(page, "#vision-advisor-card")
+        await random_hover(page, 500, 400, radius=20, duration=2.0)
         
-        # 4. Energy Optimizer
+        # 4. Energy Optimizer (6s)
         await smooth_click(page, "#agent-card-nrgy")
-        await page.wait_for_timeout(12000)
+        await smooth_move_to(page, "#vision-advisor-card")
+        await random_hover(page, 500, 400, radius=20, duration=4.0)
         
-        # 5. Wellness Advisor
+        # Scroll the autonomous engine sidebar to reveal the remaining agents
+        await smooth_scroll_element(page, ".custom-scrollbar", 1.0)
+        
+        # 5. Wellness Advisor (5s)
         await smooth_click(page, "#agent-card-wlns")
-        await page.wait_for_timeout(12000)
+        await smooth_move_to(page, "#vision-advisor-card")
+        await random_hover(page, 500, 400, radius=20, duration=3.0)
         
-        # 6. Vision Advisor
+        # 6. Vision Advisor (6s)
         await smooth_click(page, "#agent-card-vis")
-        await page.wait_for_timeout(12000)
+        await smooth_move_to(page, "#vision-advisor-card")
+        await random_hover(page, 500, 400, radius=20, duration=4.0)
         
-        # 7. Timeline Coordinator
+        # 7. Timeline Coordinator (5s)
         await smooth_click(page, "#agent-card-time")
-        await page.wait_for_timeout(10000)
+        await smooth_move_to(page, "#vision-advisor-card")
+        await random_hover(page, 500, 400, radius=20, duration=3.0)
         
-        # --- SCENE 7: Deep Dive Audit ---
-        print("   - Scene 7: Deep Dive Audit")
+        # --- SCENE 4: Deep Dive Audit ---
+        print("   - Scene 4: Deep Dive Audit")
         await smooth_click(page, "#trigger-audit-btn")
         
-        # Wait for the 11-step terminal sequence to complete
-        await page.wait_for_timeout(25000) # Extended to ensure video outlasts audio stream for safe ffmpeg trim
+        # Scroll to the bottom to watch the massive trace print out
+        await smooth_scroll_to(page, 1.0)
+        await smooth_move_to(page, "#logic-trace")
+        await random_hover(page, 600, 650, radius=30, duration=15.0)
+        await page.wait_for_timeout(3000)
         
         await page.close()
         await context.close()
@@ -248,8 +299,8 @@ def compile_final_video(temp_dir, narration_audio, final_output):
         "-i", narration_audio,
         "-map", "0:v",
         "-map", "1:a",
-        "-vf", "scale=1920:1080",
         "-c:v", "libx264",
+        "-preset", "ultrafast",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
         "-shortest",
@@ -267,10 +318,7 @@ def main():
     
     try:
         generate_voiceover(VOICEOVER_TEXT, narration_audio)
-        
-        # Ensure the server is running locally first!
         asyncio.run(record_walkthrough(target_url, temp_video_dir))
-        
         compile_final_video(temp_video_dir, narration_audio, final_output)
         
         if os.path.exists(temp_video_dir):
