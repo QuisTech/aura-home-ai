@@ -342,8 +342,8 @@ export default function AuraCommandCenter() {
                 <AgentStatusCard id="agent-card-pntry" label="PNTRY" name="Pantry Architect" status="Active - Stock 98% Optimal" active={activeAgent === 'PNTRY'} icon={<ShoppingCart className="w-4 h-4" />} onClick={() => handleAgentClick('PNTRY')} />
                 <AgentStatusCard id="agent-card-nrgy" label="NRGY" name="Energy Optimizer" status="Active - Load Optimized (-25%)" active={activeAgent === 'NRGY'} icon={<Zap className="w-4 h-4" />} onClick={() => handleAgentClick('NRGY')} />
                 <AgentStatusCard id="agent-card-wlns" label="WLNS" name="Wellness Advisor" status="Active - AQI: 42 (Excellent)" active={activeAgent === 'WLNS'} icon={<Activity className="w-4 h-4" />} onClick={() => handleAgentClick('WLNS')} />
-                <AgentStatusCard id="agent-card-time" label="TIME" name="Timeline Coordinator" status="Active - 38 Decisions Synced" active={activeAgent === 'TIME'} icon={<Clock className="w-4 h-4" />} onClick={() => handleAgentClick('TIME')} />
                 <AgentStatusCard id="agent-card-vis" label="VIS" name="Vision Advisor" status="Active - CCTV Perimeter Active" active={activeAgent === 'VIS'} icon={<Eye className="w-4 h-4" />} onClick={() => handleAgentClick('VIS')} />
+                <AgentStatusCard id="agent-card-time" label="TIME" name="Timeline Coordinator" status="Active - 38 Decisions Synced" active={activeAgent === 'TIME'} icon={<Clock className="w-4 h-4" />} onClick={() => handleAgentClick('TIME')} />
               </div>
 
               {/* Audit Progress Console Terminal */}

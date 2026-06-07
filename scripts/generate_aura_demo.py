@@ -3,20 +3,36 @@ import os
 import glob
 import subprocess
 import shutil
+# pyrefly: ignore [missing-import]
 from playwright.async_api import async_playwright
 
 # 1. Narrator voiceover text
 VOICEOVER_TEXT = (
-    "Welcome to Aura Home AI, the ultimate seven-agent home orchestration node. "
-    "Unlike standard smart homes, Aura features specialized autonomous agents that actively monitor, reason, and optimize your entire property to save you time and money. "
-    "At the center, our Finance Sentinel constantly audits your connected accounts for subscription leaks. "
-    "The Guardian Protocol cross-references neighborhood watch databases to secure your perimeter. "
-    "Our Pantry Architect uses computer vision to detect low stock, and automatically reroutes grocery orders to find the best prices. "
-    "The Energy Optimizer actively monitors grid pricing to shed non-essential HVAC loads during peak hours. "
-    "Meanwhile, the Wellness Advisor, Timeline Coordinator, and Vision Advisor work in perfect harmony to manage air quality, daily schedules, and multimodal security streams. "
-    "Let's see it in action. When we trigger a Critical Household Audit, Aura orchestrates a full sweep across all seven agents simultaneously. "
-    "Watch the terminal trace as it secures the perimeter, adjusts the HVAC, orders groceries, and cancels unused subscriptions in real-time, syncing all resolutions securely to MongoDB. "
-    "Aura Home AI. Total home autonomy, finally realized."
+    "Welcome to Aura Home AI, the world's first truly autonomous home orchestration engine. "
+    "We are currently living in a cognitive crisis where our digital lives are fragmented and our homes are unmanaged enterprises of hidden costs and security gaps. "
+    "Aura is the solution. We begin with inspiration. "
+    "Our Zen discovery sequence, which you see here, is designed to create a sanctuary of focus, calming the mind before the technology even begins to reason. "
+    "Aura is architected around the seven pillars of autonomy. "
+    "This isn't just a collection of smart devices. It's a higher performance multi-agent node. "
+    "Under the system, our home's resources, finances, and security layers are unified under a single cognitive framework. "
+    "The logic is elegant and robust. We continuously sense, reason, persist, and resolve, transforming chaotic sensory noise into clean, automated action. "
+    "Let's step into the command console, the cockpit of your digital life. "
+    "Here, the complexity of seven specialized agents is translated into actionable consumer value. "
+    "Notice the live logs Aura is sensing, reasoning, and resolving in the background without a single human click. "
+    "This is the definition of agentic autonomy. "
+    "Let's look at each of the seven active nodes in our sidebar orchestration matrix. "
+    "First, our finance sentinel autonomously audits household expenditures in real time. "
+    "It continuously scans bank statements and utility invoices to identify redundant subscription creep. "
+    "The Sentinel has already resolved 12 distinct financial leaks, saving the household hundreds of dollars automatically. "
+    "Second, our guardian protocol manages home security and smart locks, monitoring entry points to ensure perimeter safety and arming the home when residents leave. "
+    "Third, the pantry architect tracks kitchen stock and automates grocery purchases. "
+    "If a price spike is detected on common items, it compares local market indices and reroutes orders to optimize food budgets. "
+    "Fourth, the energy optimizer coordinates smart thermostats and solar grids, shifting HVAC load cycles during peak use periods to reduce carbon footprints by 25%. "
+    "Fifth, the wellness adviser manages indoor air quality, humidity levels, and ambient lighting protocols to foster a healthy, stress-free living environment. "
+    "Sixth, the vision adviser processes CCTV feeds using Gemini multimodal vision. "
+    "It classifies courier deliveries and threat levels with 98% match accuracy, committing visual logs via the model context protocol. "
+    "Finally, our timeline coordinator unifies scheduling and triggers critical audit sequences. "
+    "When executing a deep dive audit, the engine reasons across all nodes, cancels leaks, resolves billing overcharges, and commits immutable receipts to our secure vault."
 )
 
 # 2. Virtual cursor CSS/JS to inject on page load
@@ -91,6 +107,25 @@ async def smooth_click(page, selector):
     await page.mouse.up()
     await asyncio.sleep(0.2)
 
+async def smooth_scroll_to(page, target_percent):
+    current_y = await page.evaluate("window.scrollY")
+    max_scroll = await page.evaluate("document.documentElement.scrollHeight - window.innerHeight")
+    target_y = int(target_percent * max_scroll)
+    
+    step = 8 if target_y > current_y else -8
+    if step == 0:
+        return
+    steps_count = int(abs(target_y - current_y) / abs(step))
+    
+    print(f"Scrolling smoothly to {int(target_percent * 100)}% depth...")
+    for _ in range(steps_count):
+        current_y += step
+        await page.evaluate(f"window.scrollTo(0, {current_y})")
+        await asyncio.sleep(0.008) # smooth high framerate scroll wait
+        
+    await page.evaluate(f"window.scrollTo(0, {target_y})")
+    await asyncio.sleep(0.6) # allow visual layout elements to settle
+
 def generate_voiceover(text, output_file):
     print(f"1. Synthesizing voiceover narration with edge-tts...")
     if os.path.exists(output_file):
@@ -123,20 +158,72 @@ async def record_walkthrough(url, temp_dir):
         
         await page.add_init_script(CURSOR_INJECT_JS)
         await page.goto(url, wait_until="networkidle")
-        await page.wait_for_timeout(3000)
         
-        print("   - Clicking through 7 Agents")
-        agents = ['fin', 'grd', 'pntry', 'nrgy', 'wlns', 'time', 'vis']
+        # --- SCENE 1: Landing Page Hero ---
+        # "Welcome to Aura Home AI..."
+        print("   - Scene 1: Landing Page Hero")
+        await page.wait_for_timeout(18000) 
         
-        for agent in agents:
-            await smooth_click(page, f"#agent-card-{agent}")
-            await page.wait_for_timeout(2500) # Give it time to show the dynamic diagnostic panel
+        # --- SCENE 2: Zen Discovery Sequence ---
+        # "Our Zen discovery sequence..."
+        print("   - Scene 2: Zen Discovery Fold")
+        await smooth_scroll_to(page, 0.25) # Scroll down to pipeline section
+        await page.wait_for_timeout(15000)
         
-        print("   - Executing Critical Audit Sweep")
+        # --- SCENE 3: Seven Pillars of Autonomy ---
+        # "Aura is architected around the seven pillars..."
+        print("   - Scene 3: Seven Pillars Fold")
+        await smooth_scroll_to(page, 0.55) # Scroll down to Aura Seven section
+        await page.wait_for_timeout(20000)
+        
+        # --- SCENE 4: Navigate to Command Console ---
+        # "Let's step into the command console..."
+        print("   - Scene 4: Transition to Command Console")
+        await smooth_scroll_to(page, 0.0) # Scroll to top
+        await smooth_click(page, "nav a[href='/command']")
+        await page.wait_for_timeout(8000) # Give time for route and load
+        
+        # --- SCENE 5: Command Console Observation ---
+        # "Here, the complexity of seven specialized agents is translated..."
+        print("   - Scene 5: Command Console Observation")
+        await page.wait_for_timeout(15000)
+        
+        # --- SCENE 6: The 7 Active Nodes ---
+        print("   - Scene 6: Agent Navigation")
+        # 1. Finance Sentinel
+        await smooth_click(page, "#agent-card-fin")
+        await page.wait_for_timeout(15000)
+        
+        # 2. Guardian Protocol
+        await smooth_click(page, "#agent-card-grd")
+        await page.wait_for_timeout(10000)
+        
+        # 3. Pantry Architect
+        await smooth_click(page, "#agent-card-pntry")
+        await page.wait_for_timeout(12000)
+        
+        # 4. Energy Optimizer
+        await smooth_click(page, "#agent-card-nrgy")
+        await page.wait_for_timeout(12000)
+        
+        # 5. Wellness Advisor
+        await smooth_click(page, "#agent-card-wlns")
+        await page.wait_for_timeout(12000)
+        
+        # 6. Vision Advisor
+        await smooth_click(page, "#agent-card-vis")
+        await page.wait_for_timeout(12000)
+        
+        # 7. Timeline Coordinator
+        await smooth_click(page, "#agent-card-time")
+        await page.wait_for_timeout(10000)
+        
+        # --- SCENE 7: Deep Dive Audit ---
+        print("   - Scene 7: Deep Dive Audit")
         await smooth_click(page, "#trigger-audit-btn")
         
         # Wait for the 11-step terminal sequence to complete
-        await page.wait_for_timeout(15000)
+        await page.wait_for_timeout(25000) # Extended to ensure video outlasts audio stream for safe ffmpeg trim
         
         await page.close()
         await context.close()
@@ -176,7 +263,7 @@ def main():
     narration_audio = "narration.mp3"
     temp_video_dir = "video_temp"
     final_output = "aura_home_ai_demo.mp4"
-    target_url = "http://localhost:3000"
+    target_url = "https://aura-home-ai-eight.vercel.app"
     
     try:
         generate_voiceover(VOICEOVER_TEXT, narration_audio)
@@ -191,13 +278,13 @@ def main():
         if os.path.exists(narration_audio):
             os.remove(narration_audio)
             
-        print(f"\n=======================================================")
+        print(f"\\n=======================================================")
         print(f"AURA HOME AI DEMO VIDEO COMPILATION COMPLETE!")
         print(f"File created: {os.path.abspath(final_output)}")
         print(f"=======================================================")
         
     except Exception as e:
-        print(f"\n[ERROR] Video generation failed: {e}")
+        print(f"\\n[ERROR] Video generation failed: {e}")
 
 if __name__ == "__main__":
     main()
