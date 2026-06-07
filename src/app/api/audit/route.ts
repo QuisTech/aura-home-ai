@@ -49,10 +49,16 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get('userId') || 'demo-user';
+    const agentType = searchParams.get('agentType');
     
+    const query: any = { userId };
+    if (agentType && agentType !== 'ALL') {
+      query.agentType = agentType;
+    }
+
     const { db } = await connectToDatabase();
     const audits = await db.collection('audit_logs')
-      .find({ userId })
+      .find(query)
       .sort({ timestamp: -1 })
       .limit(50)
       .toArray();

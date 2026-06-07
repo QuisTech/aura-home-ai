@@ -62,6 +62,43 @@ export default function AuraCommandCenter() {
     }
   };
 
+  const labelToType: Record<string, string> = {
+    'FIN': 'finance',
+    'GRD': 'security',
+    'PNTRY': 'pantry',
+    'NRGY': 'energy',
+    'WLNS': 'wellness',
+    'TIME': 'time',
+    'VIS': 'vision'
+  };
+
+  const handleAgentClick = async (label: string) => {
+    setActiveAgent(label);
+    const agentType = labelToType[label];
+    try {
+      const response = await fetch(`/api/audit?userId=demo-user&agentType=${agentType}`);
+      const history = await response.json();
+      if (history && history.length > 0) {
+        const formattedHistory = history.map((log: any) => ({
+          id: log._id || Date.now() + Math.random(),
+          type: log.agentType,
+          msg: log.action,
+          time: new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }));
+        setLogs(formattedHistory.slice(0, 5));
+      } else {
+        setLogs([{
+          id: 'empty',
+          type: agentType,
+          msg: `No recent logs for ${label} agent in MongoDB Vault.`,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }]);
+      }
+    } catch (e) {
+      console.error("Failed to load history", e);
+    }
+  };
+
   useEffect(() => {
     const loadAuditHistory = async () => {
       try {
@@ -267,13 +304,13 @@ export default function AuraCommandCenter() {
 
               {/* 7 Agents List */}
               <div className="flex-1 space-y-4 relative z-10 overflow-y-auto mb-8 pr-2 custom-scrollbar">
-                <AgentStatusCard id="agent-card-fin" label="FIN" name="Finance Sentinel" status={activeAgent === 'FIN' && isAuditSequenceActive ? auditStatus : "Active - $142.50 Saved"} active={activeAgent === 'FIN'} icon={<CreditCard className="w-4 h-4" />} />
-                <AgentStatusCard id="agent-card-grd" label="GRD" name="Guardian Protocol" status="Active - Perimeter Secure" active={activeAgent === 'GRD'} icon={<Shield className="w-4 h-4" />} />
-                <AgentStatusCard id="agent-card-pntry" label="PNTRY" name="Pantry Architect" status="Active - Stock 98% Optimal" active={activeAgent === 'PNTRY'} icon={<ShoppingCart className="w-4 h-4" />} />
-                <AgentStatusCard id="agent-card-nrgy" label="NRGY" name="Energy Optimizer" status="Active - Load Optimized (-25%)" active={activeAgent === 'NRGY'} icon={<Zap className="w-4 h-4" />} />
-                <AgentStatusCard id="agent-card-wlns" label="WLNS" name="Wellness Advisor" status="Active - AQI: 42 (Excellent)" active={activeAgent === 'WLNS'} icon={<Activity className="w-4 h-4" />} />
-                <AgentStatusCard id="agent-card-time" label="TIME" name="Timeline Coordinator" status="Active - 38 Decisions Synced" active={activeAgent === 'TIME'} icon={<Clock className="w-4 h-4" />} />
-                <AgentStatusCard id="agent-card-vis" label="VIS" name="Vision Advisor" status="Active - CCTV Perimeter Active" active={activeAgent === 'VIS'} icon={<Eye className="w-4 h-4" />} />
+                <AgentStatusCard id="agent-card-fin" label="FIN" name="Finance Sentinel" status={activeAgent === 'FIN' && isAuditSequenceActive ? auditStatus : "Active - $142.50 Saved"} active={activeAgent === 'FIN'} icon={<CreditCard className="w-4 h-4" />} onClick={() => handleAgentClick('FIN')} />
+                <AgentStatusCard id="agent-card-grd" label="GRD" name="Guardian Protocol" status="Active - Perimeter Secure" active={activeAgent === 'GRD'} icon={<Shield className="w-4 h-4" />} onClick={() => handleAgentClick('GRD')} />
+                <AgentStatusCard id="agent-card-pntry" label="PNTRY" name="Pantry Architect" status="Active - Stock 98% Optimal" active={activeAgent === 'PNTRY'} icon={<ShoppingCart className="w-4 h-4" />} onClick={() => handleAgentClick('PNTRY')} />
+                <AgentStatusCard id="agent-card-nrgy" label="NRGY" name="Energy Optimizer" status="Active - Load Optimized (-25%)" active={activeAgent === 'NRGY'} icon={<Zap className="w-4 h-4" />} onClick={() => handleAgentClick('NRGY')} />
+                <AgentStatusCard id="agent-card-wlns" label="WLNS" name="Wellness Advisor" status="Active - AQI: 42 (Excellent)" active={activeAgent === 'WLNS'} icon={<Activity className="w-4 h-4" />} onClick={() => handleAgentClick('WLNS')} />
+                <AgentStatusCard id="agent-card-time" label="TIME" name="Timeline Coordinator" status="Active - 38 Decisions Synced" active={activeAgent === 'TIME'} icon={<Clock className="w-4 h-4" />} onClick={() => handleAgentClick('TIME')} />
+                <AgentStatusCard id="agent-card-vis" label="VIS" name="Vision Advisor" status="Active - CCTV Perimeter Active" active={activeAgent === 'VIS'} icon={<Eye className="w-4 h-4" />} onClick={() => handleAgentClick('VIS')} />
               </div>
 
               {/* Audit Progress Console Terminal */}
@@ -338,8 +375,8 @@ const StatCard = ({ id, icon, label, value, sub, trend }: any) => (
   </div>
 );
 
-const AgentStatusCard = ({ id, label, name, status, active, icon }: any) => (
-  <div id={id} className={`p-4 rounded-2xl border transition-all duration-300 ${
+const AgentStatusCard = ({ id, label, name, status, active, icon, onClick }: any) => (
+  <div id={id} onClick={onClick} className={`p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
     active 
       ? 'bg-amber-500/10 border-amber-500/30 shadow-lg shadow-amber-500/5 scale-[1.02]' 
       : 'bg-white/5 border-white/5 hover:border-white/10'
