@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Shield, CreditCard, Zap, ShoppingCart, TrendingDown, Bell, ArrowLeft, Clock, Eye, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { VisionDiagnostic } from './dashboard/VisionDiagnostic';
+import { AgentDiagnostic } from './dashboard/AgentDiagnostic';
 
 export default function AuraCommandCenter() {
   const [logs, setLogs] = useState<any[]>([]);
@@ -273,9 +273,9 @@ export default function AuraCommandCenter() {
               />
             </div>
 
-            {/* Vision Diagnostics - Multimodal Proof */}
+            {/* Agent Diagnostics - Dynamic Multimodal Proof */}
             <div id="vision-advisor-card" className="group">
-              <VisionDiagnostic />
+              <AgentDiagnostic activeAgent={activeAgent} />
             </div>
 
             {/* Live Reasoning Feed */}
