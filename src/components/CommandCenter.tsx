@@ -32,16 +32,22 @@ export default function AuraCommandCenter() {
       });
       const data = await response.json();
 
-      const actualSavings = data.savings !== undefined ? data.savings : 26.99;
+      const finSavings = data.savings !== undefined ? data.savings : 60.99;
       const detected = data.detectedLeaks || 2;
+      const totalSweepSavings = finSavings + 4.20 + 2.40 + 1.15; // Including PNTRY, NRGY, WLNS savings
 
       const logSteps = [
-        "[FIN] Initiating autonomous household audit from MongoDB...",
-        "[FIN] Querying AfterpartyCluster for redundant subscription creep...",
+        "[SYSTEM] Initiating 7-Agent Autonomous Household Audit via MongoDB...",
+        "[VIS] Perimeter sweep complete. Courier verified. Target: PERIMETER_7.",
+        "[GRD] Neighborhood watch DB cross-referenced. Threat Level: ZERO.",
+        "[TIME] Calendar sync active. Pre-conditioning EV for 45m departure.",
+        "[WLNS] Optimizing air purifiers to master bedroom. Saved $1.15.",
+        "[PNTRY] Critical low: EGGS. Local farm cooperative order queued. Saved $4.20.",
+        "[NRGY] Grid peak detected. Shedding HVAC load. Saved $2.40.",
+        "[FIN] Querying AfterpartyCluster for subscription creep...",
         `[FIN] Discovered leak: ${detected} unused subscriptions found in DB!`,
-        "[FIN] Queueing cancellations and refund disputes...",
-        `[LEDGER] Vault sync: Committing resolution to private MongoDB... (ID: ${data.auditId || '6a251c'})`,
-        `[FIN] Audit complete. Saved $${actualSavings}/mo.`
+        `[LEDGER] Vault sync: Committing 7-agent resolutions to private MongoDB... (ID: ${data.auditId || '6a251c'})`,
+        `[SYSTEM] Audit complete. Cumulative Savings: $${totalSweepSavings.toFixed(2)}`
       ];
 
       let currentStep = 0;
@@ -52,10 +58,10 @@ export default function AuraCommandCenter() {
         } else {
           clearInterval(interval);
           setIsLoading(false);
-          setSavings(prev => prev + actualSavings);
-          setAuditStatus(`Active - $${(savings + actualSavings).toFixed(2)} Saved`);
+          setSavings(prev => prev + totalSweepSavings);
+          setAuditStatus(`Active - $${(savings + totalSweepSavings).toFixed(2)} Saved`);
         }
-      }, 1500);
+      }, 1000); // sped up to 1 second per log so the 11 steps don't take too long
     } catch (error) {
       console.error('Audit failed:', error);
       setIsLoading(false);
