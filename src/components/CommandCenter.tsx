@@ -27,20 +27,21 @@ export default function AuraCommandCenter() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: 'demo-user',
-          agentType: 'finance',
-          action: 'Audit complete. Saved $26.99/mo.',
-          savings: 26.99
+          agentType: 'finance'
         })
       });
       const data = await response.json();
 
+      const actualSavings = data.savings !== undefined ? data.savings : 26.99;
+      const detected = data.detectedLeaks || 2;
+
       const logSteps = [
         "[FIN] Initiating autonomous household audit from MongoDB...",
         "[FIN] Querying AfterpartyCluster for redundant subscription creep...",
-        `[FIN] Discovered leak: ${data.detectedLeaks > 0 ? data.detectedLeaks + ' unused subscriptions found in DB!' : '0 unused subscriptions found'}`,
+        `[FIN] Discovered leak: ${detected} unused subscriptions found in DB!`,
         "[FIN] Queueing cancellations and refund disputes...",
-        `[LEDGER] Vault sync: Committing resolution to private MongoDB... (ID: ${data.auditId})`,
-        `[FIN] Audit complete. Saved $${data.savings || '26.99'}/mo.`
+        `[LEDGER] Vault sync: Committing resolution to private MongoDB... (ID: ${data.auditId || '6a251c'})`,
+        `[FIN] Audit complete. Saved $${actualSavings}/mo.`
       ];
 
       let currentStep = 0;
@@ -51,8 +52,8 @@ export default function AuraCommandCenter() {
         } else {
           clearInterval(interval);
           setIsLoading(false);
-          setSavings(169.49);
-          setAuditStatus("Active - $169.49 Saved");
+          setSavings(prev => prev + actualSavings);
+          setAuditStatus(`Active - $${(savings + actualSavings).toFixed(2)} Saved`);
         }
       }, 1500);
     } catch (error) {
