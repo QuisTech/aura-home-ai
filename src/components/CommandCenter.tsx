@@ -58,6 +58,7 @@ export default function AuraCommandCenter() {
         } else {
           clearInterval(interval);
           setIsLoading(false);
+          setIsAuditSequenceActive(false);
           setSavings(prev => prev + totalSweepSavings);
           setAuditStatus(`Active - $${(savings + totalSweepSavings).toFixed(2)} Saved`);
         }
