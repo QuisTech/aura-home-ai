@@ -76,7 +76,6 @@ export async function POST(req: Request) {
         userMessage: message,
         aiResponse: aiText,
         timestamp: new Date().toISOString(),
-        agentBuilderIntegration: agentBuilderResponse.status,
       });
     } catch (mcpError) {
       console.warn('MCP chat logging failed, but response sent:', mcpError);
