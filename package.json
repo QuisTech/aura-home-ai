@@ -8,10 +8,13 @@
     "start": "next start",
     "lint": "eslint",
     "test": "npx -y tsx --test src/__tests__/**/*.test.ts",
-    "setup-db": "npx tsx --env-file=.env.local scripts/setup-mongodb.ts"
+    "setup-db": "npx tsx --env-file=.env.local scripts/setup-mongodb.ts",
+    "mcp-server": "npx tsx --env-file=.env.local src/mcp-server/mongodb-server.ts",
+    "dev:full": "concurrently \"npm run mcp-server\" \"npm run dev\""
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "@modelcontextprotocol/sdk": "^0.10.0",
     "@types/fluent-ffmpeg": "^2.1.28",
     "clsx": "^2.1.1",
     "edge-tts-node": "^1.5.7",
@@ -31,6 +34,7 @@
     "@types/node": "^20.19.41",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "concurrently": "^8.2.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",
